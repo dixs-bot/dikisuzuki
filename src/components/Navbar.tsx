@@ -13,6 +13,7 @@ const links = [
   { href: "/promo", label: "Promo" },
   { href: "/test-drive", label: "Test Drive" },
   { href: "/kontak", label: "Kontak" },
+  { href: "/artikel", label: "Artikel" },
 ];
 
 export default function Navbar() {

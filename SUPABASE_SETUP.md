@@ -58,3 +58,12 @@ Tambahkan `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` di Verc
 - Halaman detail produk membaca foto dan warna dari Supabase berdasarkan slug produk.
 - Katalog dan harga awal masih mempunyai sumber data lokal `src/data/products.ts`; sebelum produksi, sinkronkan data katalog/harga ke tabel Supabase dan verifikasi semua harga OTR.
 - Nomor kontak, lokasi dealer, promo, dan spesifikasi harus diverifikasi oleh pemilik sebelum website dipublikasikan.
+
+
+## Modul Artikel / Blog
+
+Jalankan file `supabase/migrations/04_articles.sql` di Supabase Dashboard → SQL Editor → New query → Run. Migration ini membuat tabel `articles` dan kebijakan RLS: pengunjung hanya dapat membaca artikel berstatus `published`, sedangkan admin dengan role `super_admin` atau `sales_admin` dapat mengelola artikel.
+
+Setelah migration berhasil, login ke `/admin/login`, buka Dashboard → Manajemen Artikel, lalu buat artikel. Isi judul, ringkasan, konten, dan status. Artikel berstatus Draft tidak tampil ke publik; artikel berstatus Terbit tampil di `/artikel` dan halaman detail `/artikel/[slug]`.
+
+Gambar sampul dapat diunggah langsung dari panel admin ke bucket Supabase Storage `article-covers` (JPG, PNG, WebP, maksimal 5 MB), atau menggunakan URL gambar publik. Pastikan gunakan gambar yang memiliki hak penggunaan.

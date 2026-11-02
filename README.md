@@ -33,3 +33,12 @@ See `SEO_GUIDE.md` for target keywords, metadata, sitemap/robots, Google Search 
 
 ## Domain produksi
 Domain utama yang disiapkan: `https://salesuzukibandung.site`. Pastikan domain sudah ditambahkan dan DNS tervalidasi di Vercel, lalu set `NEXT_PUBLIC_SITE_URL=https://salesuzukibandung.site` pada Environment Variables Vercel dan redeploy. Panduan lengkap ada di `SEO_GUIDE.md`.
+
+
+## Artikel / Blog CMS
+
+- Halaman publik: `/artikel` dan `/artikel/[slug]`.
+- Panel admin: `/admin/articles` (dilindungi middleware admin).
+- Jalankan `supabase/migrations/04_articles.sql` pada Supabase SQL Editor sebelum menggunakan modul ini.
+- Artikel Draft tidak terlihat publik; status Terbit akan menampilkannya dan menambahkannya ke sitemap.
+- Isian gambar sampul menerima URL publik.

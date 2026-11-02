@@ -41,3 +41,8 @@
 - Added `SEO_GUIDE.md` with keyword mapping, Search Console setup, and publication checks.
 - Production domain must be configured through `NEXT_PUBLIC_SITE_URL` before deployment.
 - Full Next.js production build has not yet been verified in this environment.
+
+
+## Modul Artikel (CMS)
+
+Ditambahkan pada build ini: tabel `articles` beserta RLS, halaman daftar dan detail artikel publik, navigasi Artikel, panel admin untuk tambah/edit/hapus serta status Draft/Terbit, metadata SEO artikel, dan sitemap dinamis. Migration `supabase/migrations/04_articles.sql` wajib dijalankan di Supabase sebelum fitur dipakai.

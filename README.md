@@ -1,1 +1,27 @@
-# dikisuzuki
+# Suzuki Digital Showroom — Diki Wahyudin
+
+Website katalog Suzuki dengan identitas visual **White Blue Neon**. Project menggunakan Next.js 14, React 18, TypeScript, Tailwind CSS, dan Supabase.
+
+## Fitur dalam source saat ini
+
+- Customer website: homepage, katalog, detail kendaraan, simulasi, promo, test drive, dan kontak.
+- Design system White Blue Neon untuk customer website dan admin.
+- Admin login dengan Supabase Auth dan pemeriksaan role `super_admin` / `sales_admin`.
+- Middleware untuk melindungi `/admin/*` selain halaman login.
+- Dashboard admin dengan statistik yang dibaca dari Supabase.
+- Upload beberapa foto ke Supabase Storage, metadata ke `vehicle_photos`, pemilihan warna, penghapusan, dan penetapan foto utama.
+- Halaman detail produk membaca warna dan galeri foto dari Supabase.
+
+## Persiapan
+
+1. Salin `.env.example` menjadi `.env.local` dan isi kredensial Supabase.
+2. Ikuti `SUPABASE_SETUP.md` untuk menjalankan migration, seed, membuat bucket, dan bootstrap akun admin.
+3. Jalankan `npm install` lalu `npm run dev`.
+
+## Catatan penting sebelum production
+
+- Harga dalam `src/data/products.ts` merupakan data referensi awal. Verifikasi harga OTR, wilayah, dan periode sebelum dipublikasikan.
+- Data katalog customer masih menggunakan data lokal sebagai fallback/sumber awal; tahap sinkronisasi penuh katalog dan harga dari tabel Supabase masih perlu diselesaikan.
+- Foto kendaraan asli belum disertakan di ZIP. Upload foto milik sendiri melalui Admin → Galeri.
+- Nomor WhatsApp, email, lokasi dealer, jam operasional, promo, spesifikasi, dan klaim layanan perlu dikonfirmasi pemilik.
+- Jangan pernah menambahkan `.env` ke Git atau membagikan service-role key.

@@ -1,5 +1,5 @@
-import KontakPage from "../kontak/page";
+import { redirect } from "next/navigation";
 
-export default function TentangPage() {
-  return <KontakPage />;
+export default function TentangAliasPage() {
+  redirect("/kontak");
 }

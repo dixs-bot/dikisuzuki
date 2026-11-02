@@ -1,5 +1,5 @@
-import CatalogPage from "../katalog/page";
+import { redirect } from "next/navigation";
 
-export default function MobilPage() {
-  return <CatalogPage />;
+export default function MobilAliasPage() {
+  redirect("/katalog");
 }

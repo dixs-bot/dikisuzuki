@@ -30,3 +30,14 @@
 4. Sinkronkan sumber katalog/harga customer sepenuhnya ke database Supabase (saat ini data lokal masih menjadi sumber awal/fallback).
 5. Uji login, role, RLS, upload, delete, dan tampilan customer di project Supabase nyata.
 6. Jalankan `npm ci` dan `npm run build` di lokal/Vercel untuk verifikasi akhir; deploy hanya jika build PASS.
+
+
+## SEO implementation update
+- Added unique metadata/canonical URLs for public routes and product detail pages.
+- Added generated `robots.txt` and `sitemap.xml` routes.
+- Added `WebSite`, `Person`, and product breadcrumb structured data.
+- Added local-intent content and FAQ text to the homepage.
+- Redirected duplicate `/mobil` and `/tentang` routes to their canonical destinations.
+- Added `SEO_GUIDE.md` with keyword mapping, Search Console setup, and publication checks.
+- Production domain must be configured through `NEXT_PUBLIC_SITE_URL` before deployment.
+- Full Next.js production build has not yet been verified in this environment.

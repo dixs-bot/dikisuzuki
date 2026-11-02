@@ -25,3 +25,7 @@ Website katalog Suzuki dengan identitas visual **White Blue Neon**. Project meng
 - Foto kendaraan asli belum disertakan di ZIP. Upload foto milik sendiri melalui Admin → Galeri.
 - Nomor WhatsApp, email, lokasi dealer, jam operasional, promo, spesifikasi, dan klaim layanan perlu dikonfirmasi pemilik.
 - Jangan pernah menambahkan `.env` ke Git atau membagikan service-role key.
+
+
+## SEO
+See `SEO_GUIDE.md` for target keywords, metadata, sitemap/robots, Google Search Console setup, and required publication checks. Set `NEXT_PUBLIC_SITE_URL` to the actual production HTTPS domain in Vercel.

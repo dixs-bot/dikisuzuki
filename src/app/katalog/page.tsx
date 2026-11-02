@@ -42,6 +42,9 @@ export default function CatalogPage() {
         <p className="text-sm text-gray-500">
           Temukan kendaraan yang sesuai kebutuhan Anda, mulai dari SUV tangguh, MPV keluarga, hatchback lincah, hingga armada niaga komersial.
         </p>
+        <p className="mx-auto max-w-3xl text-xs leading-6 text-slate-500">
+          Harga dan DP yang ditampilkan merupakan referensi dari data website, bukan penawaran final. Konfirmasikan harga OTR Bandung, stok, warna, promo, dan rincian pembiayaan terbaru sebelum transaksi.
+        </p>
       </div>
 
       {/* Filter and Search Bar */}

@@ -66,7 +66,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               {product.variants.length} Varian
             </span>
             <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-[11px] px-2 py-0.5 rounded-md font-medium">
-              DP Mulai {formatRupiah(product.dpStart || 0)}
+              Estimasi DP {formatRupiah(product.dpStart || 0)}
             </span>
           </div>
         </div>

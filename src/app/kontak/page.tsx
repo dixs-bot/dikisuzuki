@@ -1,3 +1,16 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Kontak Sales Suzuki Bandung - Diki Wahyudin",
+  description: "Hubungi Diki Wahyudin untuk konsultasi pembelian mobil Suzuki di Bandung. Lihat nomor WhatsApp, alamat showroom, jam layanan, dan petunjuk lokasi.",
+  alternates: { canonical: "/kontak" },
+  openGraph: {
+    type: "website",
+    title: "Kontak Sales Suzuki Bandung - Diki Wahyudin",
+    description: "Hubungi Diki Wahyudin untuk konsultasi pembelian mobil Suzuki di Bandung. Lihat nomor WhatsApp, alamat showroom, jam layanan, dan petunjuk lokasi.",
+    url: "/kontak",
+  },
+};
 import { siteConfig, getWhatsAppLink } from "@/lib/constants";
 import { MapPin, Phone, MessageCircle, Mail, Clock, ShieldCheck } from "lucide-react";
 
@@ -6,7 +19,7 @@ export default function KontakPage() {
     <div className="max-w-7xl mx-auto px-3 py-7 sm:px-6 sm:py-14 lg:px-8 space-y-12">
       <div className="text-center max-w-3xl mx-auto space-y-3">
         <span className="text-xs font-bold uppercase tracking-wider text-[#168BFF] bg-[#eaf4ff] px-3 py-1 rounded-full">
-          Kontak &amp; Dealer Resmi
+          Kontak Sales Suzuki Bandung
         </span>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-[#123B78]">
           Hubungi Diki Wahyudin — Suzuki Bandung
@@ -53,7 +66,7 @@ export default function KontakPage() {
               <div className="flex items-center gap-3">
                 <MessageCircle className="w-5 h-5 text-emerald-600 shrink-0" />
                 <div>
-                  <strong className="block text-xs uppercase text-gray-400">WhatsApp Resmi:</strong>
+                  <strong className="block text-xs uppercase text-gray-400">WhatsApp:</strong>
                   <a
                     href={getWhatsAppLink()}
                     target="_blank"

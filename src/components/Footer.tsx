@@ -24,11 +24,11 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-sm text-gray-300 leading-relaxed mb-4">
-              Pusat informasi harga OTR, promo diskon resmi, paket kredit DP ringan, dan pemesanan unit mobil Suzuki terbaik untuk wilayah Bandung dan sekitarnya bersama <strong>Diki Wahyudin</strong>.
+              Pusat informasi model, harga referensi, program pembelian, simulasi kredit, dan konsultasi mobil Suzuki di Bandung bersama <strong>Diki Wahyudin</strong>.
             </p>
             <div className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-950/50 border border-emerald-800/50 p-2.5 rounded-lg">
               <ShieldCheck className="w-4 h-4 shrink-0" />
-              <span>Dealer Resmi Terpercaya &bull; Garansi Pabrik Resmi</span>
+              <span>Konsultasi Sales Suzuki Bandung &bull; Informasi Garansi Kendaraan</span>
             </div>
           </div>
 
@@ -55,7 +55,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/promo" className="hover:text-white transition">
-                  Promo Diskon & Cashback
+                  Promo dan Penawaran Terbaru
                 </Link>
               </li>
               <li>

@@ -1,3 +1,16 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Simulasi Kredit Mobil Suzuki Bandung",
+  description: "Hitung perkiraan DP dan angsuran mobil Suzuki di Bandung. Konsultasikan simulasi aktual, tenor, biaya, dan penawaran pembiayaan dengan Diki Wahyudin.",
+  alternates: { canonical: "/simulasi" },
+  openGraph: {
+    type: "website",
+    title: "Simulasi Kredit Mobil Suzuki Bandung",
+    description: "Hitung perkiraan DP dan angsuran mobil Suzuki di Bandung. Konsultasikan simulasi aktual, tenor, biaya, dan penawaran pembiayaan dengan Diki Wahyudin.",
+    url: "/simulasi",
+  },
+};
 import { productsData } from "@/data/products";
 import CreditSimulationWidget from "@/components/CreditSimulationWidget";
 import { siteConfig, getWhatsAppLink } from "@/lib/constants";
@@ -15,7 +28,7 @@ export default function SimulasiPage() {
           Kalkulator Kredit Mobil Suzuki Bandung
         </h1>
         <p className="text-sm text-gray-500">
-          Hitung estimasi Down Payment (DP) dan angsuran per bulan secara akurat menggunakan suku bunga resmi flat dealer Suzuki Ahmad Yani Bandung.
+          Hitung perkiraan Down Payment (DP) dan angsuran sebagai gambaran awal. Hasil bukan penawaran resmi; bunga, asuransi, biaya administrasi, tenor, dan persetujuan mengikuti ketentuan perusahaan pembiayaan.
         </p>
       </div>
 
@@ -33,7 +46,7 @@ export default function SimulasiPage() {
           <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100 space-y-2">
             <h3 className="font-bold text-[#123B78]">Pilihan Leasing Fleksibel</h3>
             <p className="text-xs leading-relaxed">
-              Bekerja sama dengan BCA Finance, Mandiri Tunas Finance (MTF), Suzuki Finance, Adira Finance, OTO, dan Maybank dengan bunga kompetitif.
+              Pilihan perusahaan pembiayaan, bunga, tenor, asuransi, dan biaya mengikuti program yang tersedia serta hasil verifikasi pengajuan calon konsumen.
             </p>
           </div>
 
@@ -45,9 +58,9 @@ export default function SimulasiPage() {
           </div>
 
           <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100 space-y-2">
-            <h3 className="font-bold text-[#123B78]">Jaminan Approval Cepat</h3>
+            <h3 className="font-bold text-[#123B78]">Pendampingan Pengajuan</h3>
             <p className="text-xs leading-relaxed">
-              Berkas dibantu dan dijemput ke rumah. Tim sales akan mengawal proses dari awal hingga PO leasing terbit dan unit dikirim.
+              Diki dapat membantu menjelaskan dokumen dan tahapan pengajuan. Persetujuan kredit sepenuhnya mengikuti analisis perusahaan pembiayaan.
             </p>
           </div>
         </div>

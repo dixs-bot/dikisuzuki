@@ -1,3 +1,16 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Promo Mobil Suzuki Bandung",
+  description: "Tanyakan program promo Suzuki terbaru di Bandung. Minta informasi syarat, ketersediaan unit, harga OTR, DP, dan angsuran langsung kepada Diki Wahyudin.",
+  alternates: { canonical: "/promo" },
+  openGraph: {
+    type: "website",
+    title: "Promo Mobil Suzuki Bandung",
+    description: "Tanyakan program promo Suzuki terbaru di Bandung. Minta informasi syarat, ketersediaan unit, harga OTR, DP, dan angsuran langsung kepada Diki Wahyudin.",
+    url: "/promo",
+  },
+};
 import Link from "next/link";
 import { getWhatsAppLink, formatRupiah } from "@/lib/constants";
 import { Sparkles, MessageCircle, Tag, CheckCircle2, Gift } from "lucide-react";
@@ -5,45 +18,44 @@ import { Sparkles, MessageCircle, Tag, CheckCircle2, Gift } from "lucide-react";
 export default function PromoPage() {
   const promos = [
     {
-      title: "Promo Super DP Ringan Suzuki XL7 Hybrid Bandung",
-      badge: "HOT PROMO 2026",
-      highlight: "DP Mulai 18 Jutaan / Angsuran Ringan",
+      title: "Informasi Kredit dan Promo Suzuki XL7 Bandung",
+      badge: "TANYAKAN PROMO",
+      highlight: "Tanyakan DP dan angsuran sesuai tipe",
       description:
-        "Dapatkan subsidi cashback puluhan juta rupiah, bunga 0%, dan bonus paket aksesoris eksklusif khusus pemesanan bulan ini bersama Diki Wahyudin.",
+        "Minta informasi program pembelian Suzuki XL7 yang sedang tersedia. Besaran DP, angsuran, bonus, dan syarat promo mengikuti periode serta persetujuan pihak pembiayaan.",
       bonuses: [
-        "Kaca Film Solargard Bergaransi 5 Tahun",
-        "Karpet Set Orisinil Suzuki",
-        "Talang Air & Dudukan Plat",
-        "Free Jasa Servis & Oli s.d 50.000 KM",
-        "Garansi Baterai Lithium Hybrid 8 Tahun",
+        "Informasi harga OTR dan tipe XL7",
+        "Pilihan DP dan tenor pembiayaan",
+        "Ketersediaan warna dan unit",
+        "Syarat serta periode promo yang berlaku",
       ],
       slug: "xl7",
     },
     {
-      title: "Promo New Carry Pick Up — Rajanya Usaha Bandung",
-      badge: "PROMO NIAGA",
-      highlight: "DP Mulai 8 Jutaan / Cicilan 3 Jutaan",
+      title: "Informasi Kredit Suzuki New Carry Bandung",
+      badge: "KENDARAAN NIAGA",
+      highlight: "Tanyakan paket kredit New Carry",
       description:
-        "Solusi terbaik kendaraan niaga tangguh dan irit. DP termurah se-Jawa Barat, proses kredit dibantu sampai approve 100%!",
+        "Konsultasikan pilihan New Carry untuk kebutuhan usaha. DP, angsuran, dan persetujuan kredit mengikuti hasil simulasi serta ketentuan perusahaan pembiayaan.",
       bonuses: [
-        "Kaca Film Depan",
-        "Apar Pemadam Kebakaran",
-        "Free Jasa Servis s.d 50.000 KM",
-        "Free Oli Mesin & Filter",
+        "Informasi tipe dan karoseri",
+        "Estimasi DP dan angsuran",
+        "Ketersediaan unit",
+        "Syarat promo berjalan",
       ],
       slug: "carry",
     },
     {
-      title: "Special Deal Suzuki All New Ertiga Cruise Hybrid",
-      badge: "PROMO KELUARGA",
-      highlight: "DP Mulai 15 Jutaan",
+      title: "Informasi Promo Suzuki Ertiga Bandung",
+      badge: "KENDARAAN KELUARGA",
+      highlight: "Tanyakan paket pembelian Ertiga",
       description:
-        "MPV ternyaman dan teririt di kelasnya dengan Cruise Control dan Smart Hybrid Vehicle by Suzuki (SHVS).",
+        "Tanyakan pilihan tipe Ertiga, fitur, harga referensi, dan program pembelian yang sedang berlaku.",
       bonuses: [
-        "Kaca Film Full Body",
-        "Voucher Belanja Eksklusif",
-        "Karpet Beludru Orisinil",
-        "Layanan Emergency Call 24 Jam",
+        "Informasi tipe dan fitur Ertiga",
+        "Estimasi DP dan angsuran",
+        "Ketersediaan warna dan unit",
+        "Syarat promo berjalan",
       ],
       slug: "ertiga",
     },
@@ -53,13 +65,13 @@ export default function PromoPage() {
     <div className="max-w-7xl mx-auto px-3 py-7 sm:px-6 sm:py-14 lg:px-8 space-y-12">
       <div className="text-center max-w-3xl mx-auto space-y-3">
         <span className="text-xs font-bold uppercase tracking-wider text-[#168BFF] bg-[#eaf4ff] px-3 py-1 rounded-full">
-          Penawaran Terbatas 2026
+          Program Promo & Penawaran
         </span>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-[#123B78]">
           Promo Spesial Mobil Suzuki Bandung
         </h1>
         <p className="text-sm text-gray-500">
-          Ambil kesempatan promo diskon cashback terbesar, paket kredit DP termurah, dan hadiah aksesoris langsung bersama Diki Wahyudin.
+          Tanyakan program promo Suzuki yang sedang tersedia, termasuk informasi harga, DP, angsuran, dan syarat penawaran. Setiap program dapat berubah sesuai periode.
         </p>
       </div>
 
@@ -80,7 +92,7 @@ export default function PromoPage() {
               <p className="text-xs text-gray-600 leading-relaxed">{promo.description}</p>
 
               <div className="pt-2">
-                <span className="text-xs font-bold text-[#123B78] block mb-2">Bonus Langsung:</span>
+                <span className="text-xs font-bold text-[#123B78] block mb-2">Informasi yang dapat dikonsultasikan:</span>
                 <ul className="space-y-1.5 text-xs text-gray-600">
                   {promo.bonuses.map((b, i) => (
                     <li key={i} className="flex items-center gap-2">

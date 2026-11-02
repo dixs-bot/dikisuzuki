@@ -1,5 +1,7 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { productsData } from "@/data/products";
+import { siteUrl } from "@/lib/seo";
 import { siteConfig, getWhatsAppLink, formatRupiah } from "@/lib/constants";
 import ProductCard from "@/components/ProductCard";
 import CreditSimulationWidget from "@/components/CreditSimulationWidget";
@@ -19,6 +21,20 @@ import {
   Award,
   Zap,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Sales Suzuki Bandung - Harga, Promo & Simulasi Kredit",
+  description:
+    "Butuh sales Suzuki Bandung? Konsultasi dengan Diki Wahyudin untuk melihat katalog XL7, Ertiga, Fronx, Carry, Jimny, Grand Vitara, simulasi kredit, dan test drive.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Sales Suzuki Bandung - Diki Wahyudin",
+    description:
+      "Katalog mobil Suzuki, harga referensi, promo yang tersedia, simulasi kredit, dan konsultasi pembelian di Bandung.",
+    url: siteUrl,
+    type: "website",
+  },
+};
 
 export default function HomePage() {
   const featuredProducts = productsData.filter((p) => p.featured);
@@ -124,10 +140,10 @@ export default function HomePage() {
               Katalog Unggulan
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#123B78] mt-2">
-              Model Terlaris Suzuki Bandung 2026
+              Pilihan Mobil Suzuki untuk Kebutuhan Anda
             </h2>
             <p className="text-sm text-gray-500 mt-1">
-              Pilihan SUV, MPV keluarga, hingga kendaraan niaga tangguh dengan harga OTR Bandung terupdate.
+              Pilihan SUV, MPV keluarga, dan kendaraan niaga Suzuki. Harga pada katalog merupakan referensi dan perlu dikonfirmasi untuk OTR Bandung terbaru.
             </p>
           </div>
           <Link
@@ -166,7 +182,7 @@ export default function HomePage() {
             </p>
             <div className="pt-4 flex flex-wrap gap-4">
               <a
-                href={getWhatsAppLink("Halo Kang Diki Wahyudin, saya mau klaim Promo Flash Diskon Cashback Suzuki bulan ini!")}
+                href={getWhatsAppLink("Halo Diki Wahyudin, saya ingin mengetahui promo Suzuki terbaru yang tersedia di Bandung.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#168BFF] hover:bg-[#123b78] text-white font-bold px-6 py-3.5 rounded-xl transition flex items-center gap-2 shadow"
@@ -206,7 +222,7 @@ export default function HomePage() {
               {siteConfig.dealerName}
             </h2>
             <p className="text-sm text-gray-600 leading-relaxed">
-              Showroom modern dengan fasilitas lengkap: display unit lengkap, bengkel resmi servis berkala, ruang tunggu ber-AC, dan area test drive yang nyaman.
+              Hubungi Diki Wahyudin untuk menanyakan ketersediaan unit, jadwal kunjungan, informasi fasilitas showroom, dan pilihan test drive.
             </p>
 
             <div className="space-y-3 text-sm text-gray-700">
@@ -261,6 +277,59 @@ export default function HomePage() {
               </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl border border-[#dce8f5] bg-white p-6 shadow-sm sm:p-10">
+          <span className="section-kicker">Informasi untuk calon pembeli</span>
+          <h2 className="mt-3 text-2xl font-extrabold text-[#123b78] sm:text-3xl">
+            Konsultasi Sales Suzuki Bandung dengan Diki Wahyudin
+          </h2>
+          <p className="mt-4 max-w-4xl text-sm leading-7 text-slate-600">
+            Sedang mencari sales Suzuki di Bandung untuk membantu memilih mobil baru? Diki Wahyudin melayani konsultasi informasi model, tipe, pilihan warna, harga referensi, dan proses pembelian kendaraan Suzuki. Layanan informasi ditujukan untuk calon pembeli di Kota Bandung, Cimahi, Kabupaten Bandung, Bandung Barat, dan wilayah Jawa Barat sesuai jangkauan layanan.
+          </p>
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
+            <div>
+              <h3 className="font-bold text-[#123b78]">Harga dan pilihan mobil Suzuki</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Bandingkan pilihan Suzuki XL7, Ertiga, Carry, Jimny, Grand Vitara, S-Presso, Fronx, dan APV melalui katalog. Harga yang ditampilkan merupakan referensi; konfirmasikan harga OTR, ketersediaan tipe, warna, dan program berjalan sebelum melakukan pemesanan.
+              </p>
+              <Link href="/katalog" className="mt-3 inline-flex text-sm font-semibold text-[#1765c0] hover:underline">Lihat katalog mobil Suzuki Bandung</Link>
+            </div>
+            <div>
+              <h3 className="font-bold text-[#123b78]">Simulasi kredit dan test drive</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Gunakan kalkulator untuk memperoleh gambaran awal DP dan angsuran, lalu minta penawaran resmi dari perusahaan pembiayaan. Anda juga dapat mengajukan jadwal test drive untuk model yang tersedia.
+              </p>
+              <div className="mt-3 flex flex-wrap gap-4 text-sm font-semibold">
+                <Link href="/simulasi" className="text-[#1765c0] hover:underline">Simulasi kredit Suzuki</Link>
+                <Link href="/test-drive" className="text-[#1765c0] hover:underline">Booking test drive</Link>
+              </div>
+            </div>
+          </div>
+          <div className="mt-7 border-t border-slate-100 pt-6">
+            <h3 className="font-bold text-[#123b78]">Pertanyaan umum</h3>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div>
+                <h4 className="text-sm font-semibold text-slate-800">Di mana saya bisa konsultasi mobil Suzuki di Bandung?</h4>
+                <p className="mt-1 text-sm leading-6 text-slate-600">Hubungi Diki Wahyudin melalui WhatsApp atau kunjungi halaman kontak untuk informasi alamat dan jadwal layanan.</p>
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-slate-800">Apakah harga di website merupakan harga final?</h4>
+                <p className="mt-1 text-sm leading-6 text-slate-600">Tidak. Harga merupakan referensi dan dapat berubah menurut tipe, wilayah, serta program. Minta konfirmasi OTR dan rincian tertulis sebelum transaksi.</p>
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-slate-800">Bisakah saya meminta simulasi kredit?</h4>
+                <p className="mt-1 text-sm leading-6 text-slate-600">Bisa. Gunakan halaman simulasi sebagai perkiraan awal, kemudian minta simulasi aktual sesuai leasing, DP, tenor, asuransi, dan biaya terkait.</p>
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-slate-800">Apakah tersedia test drive?</h4>
+                <p className="mt-1 text-sm leading-6 text-slate-600">Anda dapat mengirim permintaan jadwal test drive. Ketersediaan unit dan jadwal perlu dikonfirmasi terlebih dahulu.</p>
+              </div>
+            </div>
+          </div>
+          <Link href="/kontak" className="mt-6 inline-flex rounded-xl bg-[#123b78] px-5 py-3 text-sm font-bold text-white hover:bg-[#1765c0]">Hubungi Diki Wahyudin</Link>
         </div>
       </section>
     </div>

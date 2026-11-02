@@ -29,3 +29,7 @@ Website katalog Suzuki dengan identitas visual **White Blue Neon**. Project meng
 
 ## SEO
 See `SEO_GUIDE.md` for target keywords, metadata, sitemap/robots, Google Search Console setup, and required publication checks. Set `NEXT_PUBLIC_SITE_URL` to the actual production HTTPS domain in Vercel.
+
+
+## Domain produksi
+Domain utama yang disiapkan: `https://salesuzukibandung.site`. Pastikan domain sudah ditambahkan dan DNS tervalidasi di Vercel, lalu set `NEXT_PUBLIC_SITE_URL=https://salesuzukibandung.site` pada Environment Variables Vercel dan redeploy. Panduan lengkap ada di `SEO_GUIDE.md`.

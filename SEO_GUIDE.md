@@ -45,10 +45,18 @@ Jangan menjejalkan semua kata kunci ke setiap halaman. Setiap halaman punya satu
 6. Tambahkan foto profil sales, foto showroom/dealer yang benar, foto unit aktual, dan bukti serah-terima hanya jika ada izin pelanggan.
 7. Tambahkan kebijakan privasi bila form mengumpulkan nama/nomor telepon; jelaskan tujuan penggunaan data dan persetujuan kontak.
 
+## Domain produksi: salesuzukibandung.site
+
+Domain kanonis yang digunakan source ini adalah `https://salesuzukibandung.site` (tanpa `www`). Pastikan domain ini sudah dibeli dan aktif di registrar. Jika ingin `www.salesuzukibandung.site`, tambahkan juga sebagai domain di Vercel dan atur redirect ke domain utama agar tidak membuat dua versi website terindeks.
+
+Di Vercel: buka Project → Settings → Domains → tambahkan `salesuzukibandung.site` dan, bila diperlukan, `www.salesuzukibandung.site`. Ikuti nilai DNS yang ditampilkan Vercel untuk project ini. Pada registrar, buat/perbarui record DNS sesuai instruksi Vercel; jangan menebak atau menimpa record email (MX/TXT) yang sudah digunakan. Tunggu propagasi DNS dan pastikan Vercel menampilkan domain sebagai valid serta HTTPS/SSL aktif.
+
+Di Vercel → Project → Settings → Environment Variables, set `NEXT_PUBLIC_SITE_URL` ke `https://salesuzukibandung.site` untuk Production (tambahkan Preview/Development jika memang diperlukan). Setelah mengubah environment variable, lakukan redeploy agar metadata, canonical, sitemap, robots, dan structured data memakai domain baru.
+
 ## Setelah deploy
 1. Tambahkan properti domain di Google Search Console dan verifikasi kepemilikan.
-2. Pastikan `https://DOMAIN-ANDA/robots.txt` dapat dibuka.
-3. Pastikan `https://DOMAIN-ANDA/sitemap.xml` dapat dibuka, lalu kirim di Search Console.
+2. Pastikan `https://salesuzukibandung.site/robots.txt` dapat dibuka.
+3. Pastikan `https://salesuzukibandung.site/sitemap.xml` dapat dibuka, lalu kirim di Search Console.
 4. Gunakan URL Inspection untuk beranda, katalog, dan 2-3 halaman model utama; minta pengindeksan jika tersedia.
 5. Hubungkan Google Analytics 4 (atau alat analitik yang disetujui) untuk mengukur klik WhatsApp, klik telepon, dan pengiriman form.
 6. Periksa laporan Performance Search Console tiap minggu: query, impressions, clicks, CTR, dan average position. Buat konten baru berdasarkan query yang benar-benar membawa calon pembeli.

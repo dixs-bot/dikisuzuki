@@ -1,6 +1,6 @@
 import { siteConfig } from "@/lib/constants";
 
-const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dikisuzuki.vercel.app";
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://salesuzukibandung.site";
 export const siteUrl = configuredSiteUrl.replace(/\/+$/, "");
 
 export function absoluteUrl(path = "/"): string {

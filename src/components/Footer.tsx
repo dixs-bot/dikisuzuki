@@ -3,165 +3,67 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { siteConfig, getWhatsAppLink } from "@/lib/constants";
-import { MapPin, Phone, Mail, Clock, ShieldCheck, Award, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 
 export default function Footer() {
   const pathname = usePathname();
   if (pathname.startsWith("/admin")) return null;
+
   return (
-    <footer className="bg-[#123B78] text-gray-300 pt-10 pb-8 sm:pt-14 border-t border-white/10">
-      <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
-          {/* Col 1: Identity */}
+    <footer className="border-t border-white/10 bg-[#102f52] pt-12 pb-7 text-slate-300 sm:pt-14">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-[1.35fr_.8fr_.9fr_1.15fr] lg:gap-12">
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded bg-[#168BFF] flex items-center justify-center font-black text-xl text-white">
-                S
-              </div>
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-lg font-extrabold text-[#123b78]">S</div>
               <div>
-                <h3 className="text-white font-bold text-lg tracking-tight">SUZUKI BANDUNG</h3>
-                <p className="text-xs text-gray-400 font-medium">PT. Nusantara Jaya Sentosa</p>
+                <h3 className="text-base font-extrabold tracking-tight text-white">SUZUKI BANDUNG</h3>
+                <p className="text-[11px] text-slate-400">Diki Wahyudin · Sales Consultant</p>
               </div>
             </div>
-            <p className="text-sm text-gray-300 leading-relaxed mb-4">
-              Pusat informasi model, harga referensi, program pembelian, simulasi kredit, dan konsultasi mobil Suzuki di Bandung bersama <strong>Diki Wahyudin</strong>.
+            <p className="max-w-sm text-sm leading-7 text-slate-300">
+              Informasi pilihan mobil Suzuki, tipe kendaraan, harga referensi, simulasi pembelian, dan konsultasi langsung untuk area Bandung dan sekitarnya.
             </p>
-            <div className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-950/50 border border-emerald-800/50 p-2.5 rounded-lg">
-              <ShieldCheck className="w-4 h-4 shrink-0" />
-              <span>Konsultasi Sales Suzuki Bandung &bull; Informasi Garansi Kendaraan</span>
-            </div>
           </div>
 
-          {/* Col 2: Fast Navigation */}
           <div>
-            <h4 className="text-white font-semibold text-base mb-4 border-l-4 border-[#168BFF] pl-2.5">
-              Tautan Cepat
-            </h4>
+            <h4 className="mb-4 text-sm font-bold text-white">Navigasi</h4>
             <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link href="/" className="hover:text-white transition">
-                  Beranda
-                </Link>
-              </li>
-              <li>
-                <Link href="/katalog" className="hover:text-white transition">
-                  Katalog Unit & Harga OTR
-                </Link>
-              </li>
-              <li>
-                <Link href="/simulasi" className="hover:text-white transition">
-                  Kalkulator Simulasi Kredit
-                </Link>
-              </li>
-              <li>
-                <Link href="/promo" className="hover:text-white transition">
-                  Promo dan Penawaran Terbaru
-                </Link>
-              </li>
-              <li>
-                <Link href="/test-drive" className="hover:text-white transition">
-                  Booking Test Drive Gratis
-                </Link>
-              </li>
-              <li>
-                <Link href="/kontak" className="hover:text-white transition">
-                  Lokasi Dealer Ahmad Yani
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin/login" className="text-gray-400 hover:text-white transition">
-                  Portal Admin
-                </Link>
-              </li>
+              <li><Link href="/" className="hover:text-white">Beranda</Link></li>
+              <li><Link href="/katalog" className="hover:text-white">Katalog Mobil</Link></li>
+              <li><Link href="/simulasi" className="hover:text-white">Simulasi Kredit</Link></li>
+              <li><Link href="/promo" className="hover:text-white">Informasi Promo</Link></li>
+              <li><Link href="/test-drive" className="hover:text-white">Test Drive</Link></li>
+              <li><Link href="/kontak" className="hover:text-white">Kontak</Link></li>
             </ul>
           </div>
 
-          {/* Col 3: Popular Vehicles */}
           <div>
-            <h4 className="text-white font-semibold text-base mb-4 border-l-4 border-[#168BFF] pl-2.5">
-              Model Pilihan
-            </h4>
+            <h4 className="mb-4 text-sm font-bold text-white">Model Suzuki</h4>
             <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link href="/mobil/xl7" className="hover:text-white transition">
-                  New Suzuki XL7 Hybrid (7-Seater)
-                </Link>
-              </li>
-              <li>
-                <Link href="/mobil/ertiga" className="hover:text-white transition">
-                  All New Ertiga Cruise Hybrid
-                </Link>
-              </li>
-              <li>
-                <Link href="/mobil/grand-vitara" className="hover:text-white transition">
-                  Grand Vitara Intelligent Hybrid
-                </Link>
-              </li>
-              <li>
-                <Link href="/mobil/fronx" className="hover:text-white transition">
-                  Suzuki Fronx Dynamic Crossover
-                </Link>
-              </li>
-              <li>
-                <Link href="/mobil/carry" className="hover:text-white transition">
-                  New Carry Pick Up (Rajanya Niaga)
-                </Link>
-              </li>
-              <li>
-                <Link href="/mobil/jimny-5door" className="hover:text-white transition">
-                  Jimny 5-Door 4x4 Legend
-                </Link>
-              </li>
+              <li><Link href="/mobil/xl7" className="hover:text-white">Suzuki XL7</Link></li>
+              <li><Link href="/mobil/ertiga" className="hover:text-white">Suzuki Ertiga</Link></li>
+              <li><Link href="/mobil/grand-vitara" className="hover:text-white">Grand Vitara</Link></li>
+              <li><Link href="/mobil/fronx" className="hover:text-white">Suzuki Fronx</Link></li>
+              <li><Link href="/mobil/carry" className="hover:text-white">Suzuki Carry</Link></li>
+              <li><Link href="/mobil/jimny-5door" className="hover:text-white">Suzuki Jimny</Link></li>
             </ul>
           </div>
 
-          {/* Col 4: Contact & Showroom */}
           <div>
-            <h4 className="text-white font-semibold text-base mb-4 border-l-4 border-[#168BFF] pl-2.5">
-              Kontak Sales Consultant
-            </h4>
+            <h4 className="mb-4 text-sm font-bold text-white">Hubungi Sales</h4>
             <div className="space-y-3 text-sm">
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#168BFF] shrink-0 mt-0.5" />
-                <span className="text-xs leading-relaxed">{siteConfig.address}</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <a href={`tel:${siteConfig.phone}`} className="hover:text-white transition">
-                  {siteConfig.phoneNumberFormatted}
-                </a>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <MessageCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-                <a
-                  href={getWhatsAppLink()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition text-emerald-400 font-medium"
-                >
-                  WhatsApp: +62 851-8997-6233
-                </a>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-gray-400 shrink-0" />
-                <span className="text-xs">{siteConfig.email}</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <Clock className="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
-                <span className="text-xs">{siteConfig.operatingHours}</span>
-              </div>
+              <div className="flex items-start gap-2.5"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-blue-300" /><span className="text-xs leading-6">{siteConfig.address}</span></div>
+              <div className="flex items-center gap-2.5"><Phone className="h-4 w-4 shrink-0 text-blue-300" /><a href={`tel:${siteConfig.phone}`} className="hover:text-white">{siteConfig.phoneNumberFormatted}</a></div>
+              <div className="flex items-center gap-2.5"><MessageCircle className="h-4 w-4 shrink-0 text-emerald-300" /><a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-white">WhatsApp Diki</a></div>
+              <div className="flex items-center gap-2.5"><Mail className="h-4 w-4 shrink-0 text-blue-300" /><span className="text-xs">{siteConfig.email}</span></div>
+              <div className="flex items-start gap-2.5"><Clock className="mt-0.5 h-4 w-4 shrink-0 text-blue-300" /><span className="text-xs leading-5">{siteConfig.operatingHours}</span></div>
             </div>
           </div>
         </div>
-
-        {/* Bottom copyright */}
-        <div className="mt-12 pt-6 border-t border-white/10 text-xs text-gray-400 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p>
-            &copy; {new Date().getFullYear()} Suzuki Sales Consultant Bandung &bull; <strong>Diki Wahyudin</strong>. Hak Cipta Dilindungi.
-          </p>
-          <p className="text-gray-400">
-            Nusantara Jaya Sentosa (NJS) Ahmad Yani, Kota Bandung
-          </p>
+        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 text-[11px] text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Diki Wahyudin · Informasi dan konsultasi mobil Suzuki Bandung.</p>
+          <p>Harga, promo, dan ketersediaan unit dapat berubah. Silakan konfirmasi sebelum transaksi.</p>
         </div>
       </div>
     </footer>

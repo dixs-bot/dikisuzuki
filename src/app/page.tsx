@@ -47,7 +47,7 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -bottom-28 left-1/4 h-80 w-80 rounded-full bg-[#38a5ff]/10 blur-3xl" />
         <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
           <div className="space-y-6 text-center lg:col-span-7 lg:text-left">
-            <span className="section-kicker"><span className="h-2 w-2 animate-pulse rounded-full bg-[#168bff]" /> Suzuki Digital Showroom</span>
+            <span className="section-kicker"><span className="h-2 w-2 animate-pulse rounded-full bg-[#168bff]" /> Showroom Digital Suzuki</span>
             <h1 className="text-4xl font-black leading-[1.08] tracking-tight text-[#123b78] sm:text-5xl lg:text-6xl">Temukan Mobil Suzuki <span className="bg-gradient-to-r from-[#1765c0] via-[#168bff] to-[#38a5ff] bg-clip-text text-transparent">Impian Anda.</span></h1>
             <p className="mx-auto max-w-2xl text-base leading-8 text-slate-600 sm:text-lg lg:mx-0">Jelajahi pilihan kendaraan, lihat informasi tipe dan harga, lalu hitung estimasi cicilan dengan mudah bersama <strong className="text-[#123b78]">Diki Wahyudin</strong>.</p>
             <div className="flex flex-col items-center justify-center gap-3 pt-1 sm:flex-row lg:justify-start">
@@ -63,7 +63,7 @@ export default function HomePage() {
           <div className="relative lg:col-span-5">
             <div className="absolute inset-5 rounded-[2rem] bg-[#168bff]/15 blur-2xl" />
             <div className="relative overflow-hidden rounded-[2rem] border border-white/90 bg-white/75 p-5 shadow-[0_24px_70px_rgba(18,59,120,.13)] backdrop-blur-xl sm:p-7">
-              <div className="mb-5 flex items-center justify-between gap-3"><div><span className="text-[10px] font-extrabold uppercase tracking-[.18em] text-[#168bff]">Your Suzuki Partner</span><h2 className="mt-1 text-xl font-extrabold text-[#123b78]">{siteConfig.salesName}</h2><p className="text-xs text-slate-500">{siteConfig.salesRole}</p></div><div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#123b78] to-[#168bff] text-xl font-black text-white shadow-lg shadow-blue-500/20">DW</div></div>
+              <div className="mb-5 flex items-center justify-between gap-3"><div><span className="text-[10px] font-extrabold uppercase tracking-[.18em] text-[#168bff]">Mitra Konsultasi Suzuki</span><h2 className="mt-1 text-xl font-extrabold text-[#123b78]">{siteConfig.salesName}</h2><p className="text-xs text-slate-500">{siteConfig.salesRole}</p></div><div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#123b78] to-[#168bff] text-xl font-black text-white shadow-lg shadow-blue-500/20">DW</div></div>
               <div className="relative overflow-hidden rounded-2xl border border-[#dce8f5] bg-gradient-to-br from-[#f5f9ff] to-[#eaf4ff] p-5">
                 <div className="absolute -right-5 -top-5 h-28 w-28 rounded-full border-[18px] border-[#168bff]/10" />
                 <div className="relative"><span className="rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#1765c0] shadow-sm">Konsultasi Personal</span><p className="mt-4 text-sm leading-6 text-slate-600">Bantu pilih model, tipe, warna, dan skema pembelian yang sesuai kebutuhan Anda.</p><div className="mt-5 flex items-center gap-2 text-xs font-semibold text-[#1765c0]"><ShieldCheck className="h-4 w-4" /> Pendampingan informasi pembelian</div></div>
@@ -79,7 +79,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-[#168BFF] bg-[#eaf4ff] px-3 py-1 rounded-full">
-            Kenapa Memilih Kami?
+            Layanan Konsultasi
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#123B78] mt-3">
             Keuntungan Membeli Mobil Suzuki Bersama Diki Wahyudin

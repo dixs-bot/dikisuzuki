@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { Manrope } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import { siteUrl, buildSiteStructuredData } from "@/lib/seo";
 
 
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -59,7 +61,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
-      <body className="min-h-screen flex flex-col antialiased">
+      <body className={`${manrope.variable} min-h-screen flex flex-col antialiased`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

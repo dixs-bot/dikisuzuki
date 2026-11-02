@@ -16,9 +16,11 @@
 
 ## Pemeriksaan
 
-- Pemeriksaan sintaks TypeScript/TSX dengan transpile parser: PASS.
-- `npm ci` tidak selesai dalam batas waktu sesi, sehingga dependency lokal tidak lengkap.
-- `npm run build` belum dapat dijalankan karena executable Next.js belum tersedia setelah instalasi dependency timeout.
+- Memperbaiki loop upload galeri: mengganti `files.entries()` dengan loop indeks agar kompatibel dengan target TypeScript lama.
+- Mengubah `compilerOptions.target` dari `es5` menjadi `es2017` agar iterasi modern dan API JavaScript berjalan konsisten pada build.
+- Pemeriksaan sintaks TypeScript/TSX: 22 file diperiksa, 0 error.
+- Audit seluruh import lokal (`@/` dan relative): PASS, tidak ditemukan target import yang hilang.
+- `npm ci` tidak selesai dalam batas waktu sesi; dependency lokal tidak lengkap. Karena itu full `next build` dan pemeriksaan tipe berbasis dependency belum dapat diverifikasi di lingkungan ini.
 
 ## Pekerjaan lanjutan sebelum produksi
 
@@ -27,4 +29,4 @@
 3. Verifikasi harga, spesifikasi, nomor kontak, alamat, dan promo.
 4. Sinkronkan sumber katalog/harga customer sepenuhnya ke database Supabase (saat ini data lokal masih menjadi sumber awal/fallback).
 5. Uji login, role, RLS, upload, delete, dan tampilan customer di project Supabase nyata.
-6. Jalankan `npm install`, `npm run build`, lalu deploy ke Vercel.
+6. Jalankan `npm ci` dan `npm run build` di lokal/Vercel untuk verifikasi akhir; deploy hanya jika build PASS.

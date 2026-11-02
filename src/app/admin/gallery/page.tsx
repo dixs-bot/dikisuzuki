@@ -85,7 +85,8 @@ export default function AdminGalleryPage() {
     let completed = 0;
     const product = products.find((item) => item.id === productId);
     const color = colors.find((item) => item.id === colorId);
-    for (const [index, file] of files.entries()) {
+    for (let index = 0; index < files.length; index += 1) {
+      const file = files[index];
       const safeName = file.name.toLowerCase().replace(/[^a-z0-9.-]+/g, "-");
       const storagePath = `${product?.slug || productId}/${colorId}/${crypto.randomUUID()}-${safeName}`;
       const { error: uploadError } = await supabase.storage.from(BUCKET).upload(storagePath, file, { contentType: file.type, cacheControl: "31536000", upsert: false });

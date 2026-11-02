@@ -5,6 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import CreditSimulationWidget from "@/components/CreditSimulationWidget";
 import {
   Car,
+  Calculator,
   ShieldCheck,
   CheckCircle2,
   Clock,

@@ -4,6 +4,7 @@ import { siteConfig, getWhatsAppLink, formatRupiah } from "@/lib/constants";
 import ProductCard from "@/components/ProductCard";
 import CreditSimulationWidget from "@/components/CreditSimulationWidget";
 import {
+  Car,
   ShieldCheck,
   CheckCircle2,
   Clock,

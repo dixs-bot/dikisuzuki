@@ -42,3 +42,8 @@ Domain utama yang disiapkan: `https://salesuzukibandung.site`. Pastikan domain s
 - Jalankan `supabase/migrations/04_articles.sql` pada Supabase SQL Editor sebelum menggunakan modul ini.
 - Artikel Draft tidak terlihat publik; status Terbit akan menampilkannya dan menambahkannya ke sitemap.
 - Isian gambar sampul menerima URL publik.
+
+
+### Galeri kendaraan V9
+
+Admin gallery sekarang mengunci pemilihan warna berdasarkan model, menyediakan filter galeri per model, dan menampilkan konteks target upload. Jalankan migration `05_gallery_product_color_isolation.sql` setelah migration sebelumnya untuk memastikan relasi warna tidak dapat tertukar antarproduk.

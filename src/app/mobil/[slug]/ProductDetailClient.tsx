@@ -60,7 +60,16 @@ export default function ProductDetailPage({
 
   const activeColor = colors[activeColorIndex] || colors[0];
   const selectedColorId = (activeColor as { id?: string })?.id;
-  const visiblePhotos = useMemo(() => selectedColorId ? dbPhotos.filter((photo) => photo.color_id === selectedColorId) : dbPhotos, [dbPhotos, selectedColorId]);
+  // Never mix photos from different body colors. When DB colors are unavailable,
+  // only show legacy photos that are explicitly not assigned to a color.
+  const visiblePhotos = useMemo(
+    () => selectedColorId
+      ? dbPhotos.filter((photo) => photo.color_id === selectedColorId)
+      : dbColors.length === 0
+        ? dbPhotos.filter((photo) => photo.color_id === null)
+        : [],
+    [dbPhotos, dbColors.length, selectedColorId],
+  );
   const activePhoto = visiblePhotos[activePhotoIndex] || visiblePhotos[0];
   const activeVariant = product.variants[selectedVariantIndex] || product.variants[0];
 

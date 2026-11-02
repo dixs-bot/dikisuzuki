@@ -16,8 +16,10 @@ Jalankan berurutan melalui Supabase SQL Editor:
 1. `supabase/migrations/01_initial_schema.sql`
 2. `supabase/migrations/02_storage_and_rls.sql`
 3. `supabase/migrations/03_gallery_color_and_storage_security.sql`
+4. `supabase/migrations/04_articles.sql` (jika menggunakan modul artikel)
+5. `supabase/migrations/05_gallery_product_color_isolation.sql`
 
-Lalu jalankan `supabase/seed.sql` satu kali untuk data awal produk, varian, warna, dan dealer. Periksa ulang harga serta informasi dealer sebelum dipublikasikan.
+Lalu jalankan `supabase/seed.sql` satu kali untuk data awal produk, varian, warna, dan dealer. Jika seed pernah dijalankan tetapi dropdown model/warna tetap kosong, periksa isi tabel `products` dan `vehicle_colors` di Table Editor; jangan menjalankan ulang seed berulang kali tanpa memeriksa konflik data. Periksa ulang harga serta informasi dealer sebelum dipublikasikan.
 
 ## 3. Bucket Storage
 
@@ -67,3 +69,15 @@ Jalankan file `supabase/migrations/04_articles.sql` di Supabase Dashboard → SQ
 Setelah migration berhasil, login ke `/admin/login`, buka Dashboard → Manajemen Artikel, lalu buat artikel. Isi judul, ringkasan, konten, dan status. Artikel berstatus Draft tidak tampil ke publik; artikel berstatus Terbit tampil di `/artikel` dan halaman detail `/artikel/[slug]`.
 
 Gambar sampul dapat diunggah langsung dari panel admin ke bucket Supabase Storage `article-covers` (JPG, PNG, WebP, maksimal 5 MB), atau menggunakan URL gambar publik. Pastikan gunakan gambar yang memiliki hak penggunaan.
+
+
+## Isolasi Galeri Kendaraan (V9)
+
+- Form upload mewajibkan pemilihan model, lalu warna yang hanya berasal dari model tersebut. Warna tidak dipilih otomatis ketika model berubah.
+- Preview menampilkan tujuan upload (model dan warna) sebelum file dikirim.
+- Daftar foto admin dapat difilter berdasarkan model agar pengelolaan XL7, Ertiga, Carry, dan model lain tidak tercampur.
+- Storage path disusun sebagai `slug-model/uuid-warna/nama-file`. Metadata disimpan dengan `product_id` dan `color_id`.
+- Migration 05 menambahkan foreign key gabungan agar database menolak foto yang mengacu ke warna milik produk lain. Record lama yang tidak punya warna tetap dipertahankan; record lama dengan relasi warna yang tidak cocok dilepas dari warna agar tidak salah tampil.
+- Halaman detail customer hanya menampilkan foto yang cocok dengan warna yang sedang dipilih.
+
+Jika dropdown model kosong, pastikan migration 01-03 sudah berhasil, lalu jalankan `supabase/seed.sql` satu kali. Pastikan tabel `products` dan `vehicle_colors` berisi data aktif.

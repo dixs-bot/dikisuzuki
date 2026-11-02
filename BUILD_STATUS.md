@@ -46,3 +46,11 @@
 ## Modul Artikel (CMS)
 
 Ditambahkan pada build ini: tabel `articles` beserta RLS, halaman daftar dan detail artikel publik, navigasi Artikel, panel admin untuk tambah/edit/hapus serta status Draft/Terbit, metadata SEO artikel, dan sitemap dinamis. Migration `supabase/migrations/04_articles.sql` wajib dijalankan di Supabase sebelum fitur dipakai.
+
+
+## Gallery isolation V9
+- Added strict model-to-color upload selection and explicit upload target summary in admin gallery.
+- Added per-model photo filter in admin gallery.
+- Added customer-side color filtering guard to prevent cross-color gallery mixing.
+- Added migration 05 with composite product/color foreign key and checks for new gallery rows.
+- Requires running migration 05 in the connected Supabase project before deploying this version.

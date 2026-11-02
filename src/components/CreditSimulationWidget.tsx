@@ -43,7 +43,7 @@ export default function CreditSimulationWidget({
 
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-      <div className="bg-[#123B78] text-white p-6 sm:p-8 flex items-center justify-between">
+      <div className="flex items-center justify-between gap-3 bg-[#123B78] p-4 text-white sm:p-8">
         <div>
           <span className="inline-block bg-[#168BFF] text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2">
             Kalkulator Finansial
@@ -58,7 +58,7 @@ export default function CreditSimulationWidget({
         </div>
       </div>
 
-      <div className="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 gap-5 p-4 sm:gap-8 sm:p-8 lg:grid-cols-12">
         {/* Form Controls */}
         <div className="lg:col-span-7 space-y-5">
           {/* Product Select */}
@@ -112,13 +112,13 @@ export default function CreditSimulationWidget({
                 {formatRupiah(simResult.dpAmount)}
               </span>
             </div>
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
               {[15, 20, 25, 30, 40].map((pct) => (
                 <button
                   key={pct}
                   type="button"
                   onClick={() => setDpPercent(pct)}
-                  className={`py-2 text-xs font-semibold rounded-lg border transition ${
+                  className={`min-w-0 py-2.5 text-[11px] font-semibold rounded-lg border transition sm:text-xs ${
                     dpPercent === pct
                       ? "bg-[#123B78] text-white border-[#123B78] shadow-sm"
                       : "bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100"
@@ -140,13 +140,13 @@ export default function CreditSimulationWidget({
                 Suku Bunga Flat: {(flatInterestRates[tenorYears] * 100).toFixed(0)}%/thn
               </span>
             </div>
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
               {[1, 2, 3, 4, 5].map((yr) => (
                 <button
                   key={yr}
                   type="button"
                   onClick={() => setTenorYears(yr)}
-                  className={`py-2 text-xs font-semibold rounded-lg border transition ${
+                  className={`min-w-0 py-2.5 text-[11px] font-semibold rounded-lg border transition sm:text-xs ${
                     tenorYears === yr
                       ? "bg-[#168BFF] text-white border-[#168BFF] shadow-sm"
                       : "bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100"
@@ -160,7 +160,7 @@ export default function CreditSimulationWidget({
         </div>
 
         {/* Calculation Result Box */}
-        <div className="lg:col-span-5 bg-[#F5F9FF] rounded-2xl p-6 border border-gray-200 flex flex-col justify-between">
+        <div className="flex flex-col justify-between rounded-2xl border border-gray-200 bg-[#F5F9FF] p-4 sm:p-6 lg:col-span-5">
           <div>
             <div className="text-xs uppercase font-bold text-gray-500 tracking-wider mb-1">
               Rincian Perhitungan
@@ -171,25 +171,25 @@ export default function CreditSimulationWidget({
             <div className="text-xs text-gray-600 mb-4">{selectedVariant.name}</div>
 
             <div className="space-y-3 border-t border-gray-200 pt-3 text-sm">
-              <div className="flex justify-between text-gray-600">
+              <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1 text-gray-600">
                 <span>Harga OTR Bandung:</span>
                 <span className="font-semibold text-[#123B78]">
                   {formatRupiah(simResult.otrPrice)}
                 </span>
               </div>
-              <div className="flex justify-between text-gray-600">
+              <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1 text-gray-600">
                 <span>Estimasi DP ({simResult.dpPercent}%):</span>
                 <span className="font-semibold text-[#123B78]">
                   {formatRupiah(simResult.dpAmount)}
                 </span>
               </div>
-              <div className="flex justify-between text-gray-600">
+              <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1 text-gray-600">
                 <span>Pokok Pembiayaan:</span>
                 <span className="font-semibold text-[#123B78]">
                   {formatRupiah(simResult.pokokUtang)}
                 </span>
               </div>
-              <div className="flex justify-between text-gray-600">
+              <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1 text-gray-600">
                 <span>Tenor Angsuran:</span>
                 <span className="font-semibold text-[#123B78]">
                   {simResult.tenorYears} Tahun ({simResult.totalBulan}x)
@@ -202,7 +202,7 @@ export default function CreditSimulationWidget({
               <div className="text-xs uppercase text-gray-300 font-medium tracking-wider">
                 Estimasi Angsuran Bulanan
               </div>
-              <div className="text-2xl sm:text-3xl font-black text-white mt-1">
+              <div className="mt-1 break-words text-xl font-black text-white sm:text-3xl">
                 {formatRupiah(simResult.cicilanPerBulan)}
                 <span className="text-xs font-normal text-gray-300"> /bulan</span>
               </div>

@@ -13,7 +13,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
       <div>
         {/* Top Header & Badge */}
-        <div className="relative bg-gradient-to-b from-gray-50 to-white p-5 border-b border-gray-100 flex items-center justify-center min-h-[190px]">
+        <div className="relative bg-gradient-to-b from-gray-50 to-white p-5 border-b border-gray-100 flex items-center justify-center min-h-[160px] sm:min-h-[190px]">
           {product.badge && (
             <span className="absolute top-3 left-3 bg-[#168BFF] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
               {product.badge}
@@ -24,8 +24,8 @@ export default function ProductCard({ product }: ProductCardProps) {
           </span>
 
           {/* Vehicle visual silhouette / image fallback */}
-          <div className="text-center group-hover:scale-105 transition-transform duration-300">
-            <div className="w-40 h-24 mx-auto rounded-xl bg-gradient-to-tr from-[#123B78]/10 to-[#168BFF]/10 flex items-center justify-center border border-gray-200 shadow-inner">
+          <div className="max-w-full text-center transition-transform duration-300 group-hover:scale-105">
+            <div className="mx-auto h-20 w-36 max-w-full sm:h-24 sm:w-40 rounded-xl bg-gradient-to-tr from-[#123B78]/10 to-[#168BFF]/10 flex items-center justify-center border border-gray-200 shadow-inner">
               <span className="font-black text-[#123B78] tracking-widest text-lg">
                 {product.name.replace("Suzuki ", "")}
               </span>
@@ -37,10 +37,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Content Body */}
-        <div className="p-5">
+        <div className="p-4 sm:p-5">
           <div className="flex justify-between items-start gap-2">
             <div>
-              <h3 className="font-bold text-lg text-[#123B78] group-hover:text-[#1765C0] transition">
+              <h3 className="break-words text-base font-bold text-[#123B78] sm:text-lg group-hover:text-[#1765C0] transition">
                 {product.name}
               </h3>
               <p className="text-xs text-gray-500 line-clamp-2 mt-1">
@@ -73,10 +73,10 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Action Footer */}
-      <div className="p-5 pt-0 grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-2 px-4 pb-4 sm:px-5 sm:pb-5">
         <Link
           href={`/mobil/${product.id}`}
-          className="w-full bg-[#123B78] hover:bg-[#0B2854] text-white text-xs font-semibold py-2.5 px-3 rounded-xl text-center flex items-center justify-center gap-1 transition"
+          className="w-full bg-[#123B78] hover:bg-[#0B2854] text-white text-xs font-semibold py-3 px-2 sm:px-3 rounded-xl text-center flex items-center justify-center gap-1 transition"
         >
           <span>Detail Unit</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -85,7 +85,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           href={getWhatsAppLink(waChatMsg)}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 px-3 rounded-xl text-center flex items-center justify-center gap-1 transition shadow-sm"
+          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-3 px-2 sm:px-3 rounded-xl text-center flex items-center justify-center gap-1 transition shadow-sm"
         >
           <MessageCircle className="w-3.5 h-3.5 fill-current" />
           <span>Tanya Sales</span>

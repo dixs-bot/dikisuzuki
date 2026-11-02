@@ -67,7 +67,7 @@ export default function ProductDetailPage({
   const waLeadMsg = `Halo Kang Diki Wahyudin, saya ingin konsultasi pembelian Suzuki ${product.name} tipe ${activeVariant?.name} (Warna: ${activeColor?.name}). Mohon info penawaran diskon cashback dan paket kredit DP minimnya.`;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+    <div className="mx-auto max-w-7xl space-y-8 px-3 py-6 sm:space-y-12 sm:px-6 sm:py-10 lg:px-8">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs text-gray-500">
         <Link href="/" className="hover:text-[#123B78]">
@@ -82,10 +82,10 @@ export default function ProductDetailPage({
       </div>
 
       {/* Main Showcase Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <div className="grid min-w-0 grid-cols-1 items-start gap-5 sm:gap-10 lg:grid-cols-12">
         {/* Left: Gallery & Color Swatches */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="bg-gradient-to-b from-gray-50 to-white rounded-3xl p-8 border border-gray-200 relative flex flex-col items-center justify-center min-h-[360px] shadow-sm">
+          <div className="relative flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-gray-200 bg-gradient-to-b from-gray-50 to-white p-3 shadow-sm sm:min-h-[360px] sm:rounded-3xl sm:p-8">
             {product.badge && (
               <span className="absolute top-4 left-4 bg-[#168BFF] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                 {product.badge}
@@ -102,7 +102,7 @@ export default function ProductDetailPage({
             </button>
 
             <div className="w-full space-y-3 py-3">
-              <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden rounded-2xl border border-[#dce8f5] bg-gradient-to-br from-[#f5f9ff] to-[#eaf4ff] p-3 sm:min-h-[360px]">
+              <div className="relative flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl sm:min-h-[360px] sm:rounded-2xl border border-[#dce8f5] bg-gradient-to-br from-[#f5f9ff] to-[#eaf4ff] p-3 sm:min-h-[360px]">
                 {activePhoto ? <img src={activePhoto.image_url} alt={activePhoto.title} className="max-h-[360px] w-full rounded-xl object-contain" /> : <div className="text-center"><div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full border border-[#b9d9fb] bg-white text-4xl font-black text-[#168bff] shadow-[0_12px_35px_rgba(22,139,255,.12)]">{product.name.slice(0, 1)}</div><h3 className="mt-4 text-xl font-extrabold text-[#123b78]">{product.name}</h3><p className="mt-1 text-xs text-slate-500">{activeColor.name} · Foto kendaraan akan tampil setelah diunggah admin</p></div>}
                 {activePhoto && <button type="button" onClick={() => setLightboxOpen(true)} className="absolute bottom-4 right-4 rounded-xl border border-white bg-white/90 p-2.5 text-[#1765c0] shadow-md hover:text-[#168bff]" title="Perbesar foto"><Maximize2 className="h-4 w-4" /></button>}
               </div>
@@ -112,7 +112,7 @@ export default function ProductDetailPage({
           </div>
 
           {/* Color Switcher */}
-          <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
+          <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-5">
             <h2 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">
               Pilihan Warna Bodi ({colors.length} Pilihan):
             </h2>
@@ -141,12 +141,12 @@ export default function ProductDetailPage({
 
         {/* Right: Pricing, Variant Selector & Direct CTAs */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
+          <div className="space-y-5 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:rounded-3xl sm:p-8">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-[#168BFF]">
                 {product.category === "commercial" ? "Armada Komersial" : "Mobil Penumpang"}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#123B78] mt-1">
+              <h1 className="mt-1 break-words text-2xl font-extrabold text-[#123B78] sm:text-3xl">
                 {product.name}
               </h1>
               <p className="text-xs text-gray-500 mt-1">{product.tagline}</p>

@@ -57,3 +57,28 @@ button, a { transition: color .2s ease, background-color .2s ease, border-color 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+
+/* Mobile usability and responsive safeguards */
+html, body { width: 100%; max-width: 100%; overflow-x: clip; }
+body { min-width: 320px; }
+img, video, iframe, canvas, svg { max-width: 100%; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+input, select, textarea { max-width: 100%; }
+:focus-visible { outline: 3px solid rgba(22,139,255,.55); outline-offset: 2px; }
+[id] { scroll-margin-top: 6rem; }
+
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  main { min-width: 0; }
+  h1 { overflow-wrap: anywhere; }
+  p, span, strong, label { overflow-wrap: break-word; }
+  input, select, textarea { font-size: 16px !important; }
+  button { min-height: 42px; }
+  .btn-neon:hover { transform: none; }
+  .section-kicker { letter-spacing: .08em; font-size: .64rem; }
+}
+@media (max-width: 380px) {
+  .mobile-brand-title { font-size: 12px !important; letter-spacing: .04em !important; }
+  .mobile-brand-subtitle { font-size: 9px !important; }
+}

@@ -9,9 +9,9 @@ export default function Footer() {
   const pathname = usePathname();
   if (pathname.startsWith("/admin")) return null;
   return (
-    <footer className="bg-[#123B78] text-gray-300 pt-14 pb-8 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer className="bg-[#123B78] text-gray-300 pt-10 pb-8 sm:pt-14 border-t border-white/10">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
           {/* Col 1: Identity */}
           <div>
             <div className="flex items-center gap-3 mb-4">

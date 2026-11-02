@@ -30,7 +30,7 @@ export default function CatalogPage() {
   }, [searchQuery, selectedCategory, sortOrder]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-10">
+    <div className="mx-auto max-w-7xl space-y-7 px-3 py-7 sm:space-y-10 sm:px-6 sm:py-14 lg:px-8">
       {/* Page Title */}
       <div className="text-center max-w-3xl mx-auto space-y-3">
         <span className="text-xs font-bold uppercase tracking-wider text-[#168BFF] bg-[#eaf4ff] px-3 py-1 rounded-full">
@@ -45,7 +45,7 @@ export default function CatalogPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white rounded-2xl p-4 sm:p-6 border border-gray-200 shadow-sm space-y-4">
+      <div className="space-y-4 rounded-2xl border border-gray-200 bg-white p-3 shadow-sm sm:p-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           {/* Search Input */}
           <div className="md:col-span-6 relative">
@@ -60,11 +60,11 @@ export default function CatalogPage() {
           </div>
 
           {/* Category Tabs */}
-          <div className="md:col-span-4 flex items-center gap-1.5">
+          <div className="grid grid-cols-3 items-stretch gap-1.5 md:col-span-4">
             <button
               type="button"
               onClick={() => setSelectedCategory("all")}
-              className={`flex-1 py-2 text-xs font-semibold rounded-lg border transition ${
+              className={`min-w-0 px-1 py-2.5 text-[11px] font-semibold rounded-lg border transition sm:text-xs ${
                 selectedCategory === "all"
                   ? "bg-[#123B78] text-white border-[#123B78]"
                   : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
@@ -75,7 +75,7 @@ export default function CatalogPage() {
             <button
               type="button"
               onClick={() => setSelectedCategory("passenger")}
-              className={`flex-1 py-2 text-xs font-semibold rounded-lg border transition ${
+              className={`min-w-0 px-1 py-2.5 text-[11px] font-semibold rounded-lg border transition sm:text-xs ${
                 selectedCategory === "passenger"
                   ? "bg-[#123B78] text-white border-[#123B78]"
                   : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
@@ -86,7 +86,7 @@ export default function CatalogPage() {
             <button
               type="button"
               onClick={() => setSelectedCategory("commercial")}
-              className={`flex-1 py-2 text-xs font-semibold rounded-lg border transition ${
+              className={`min-w-0 px-1 py-2.5 text-[11px] font-semibold rounded-lg border transition sm:text-xs ${
                 selectedCategory === "commercial"
                   ? "bg-[#123B78] text-white border-[#123B78]"
                   : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
@@ -113,7 +113,7 @@ export default function CatalogPage() {
 
       {/* Product Grid */}
       {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-5 min-[520px]:grid-cols-2 sm:gap-8 lg:grid-cols-3">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

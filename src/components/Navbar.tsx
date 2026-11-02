@@ -29,10 +29,10 @@ export default function Navbar() {
           <span className="flex items-center gap-2">Konsultasi bersama <strong className="text-[#123b78]">{siteConfig.salesName}</strong><a href={`tel:${siteConfig.phone}`} className="ml-2 inline-flex items-center gap-1 font-semibold text-[#1765c0] hover:text-[#168bff]"><Phone className="h-3 w-3" />{siteConfig.phoneNumberFormatted}</a></span>
         </div>
       </div>
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="group flex items-center gap-3" aria-label="Suzuki Diki Wahyudin beranda">
-          <span className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#123b78] to-[#168bff] text-xl font-black tracking-tight text-white shadow-[0_7px_18px_rgba(22,139,255,.25)]">S<span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#38a5ff]" /></span>
-          <span className="leading-tight"><span className="block text-[15px] font-extrabold tracking-[.08em] text-[#123b78]">SUZUKI <span className="text-[#168bff]">SHOWROOM</span></span><span className="mt-0.5 block text-[10px] font-medium tracking-wide text-slate-500">Diki Wahyudin · Sales Consultant</span></span>
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-2.5 sm:px-6 sm:py-3 lg:px-8">
+        <Link href="/" className="group flex min-w-0 items-center gap-2.5 sm:gap-3" aria-label="Suzuki Diki Wahyudin beranda">
+          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center sm:h-10 sm:w-10 rounded-xl bg-gradient-to-br from-[#123b78] to-[#168bff] text-xl font-black tracking-tight text-white shadow-[0_7px_18px_rgba(22,139,255,.25)]">S<span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#38a5ff]" /></span>
+          <span className="min-w-0 leading-tight"><span className="mobile-brand-title block truncate text-[13px] sm:text-[15px] font-extrabold tracking-[.08em] text-[#123b78]">SUZUKI <span className="text-[#168bff]">SHOWROOM</span></span><span className="mobile-brand-subtitle mt-0.5 block truncate text-[9px] sm:text-[10px] font-medium tracking-wide text-slate-500">Diki Wahyudin · Sales Consultant</span></span>
         </Link>
 
         <div className="hidden items-center gap-6 lg:flex">
@@ -48,10 +48,10 @@ export default function Navbar() {
           <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="btn-neon inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold"><MessageCircle className="h-4 w-4" /> Konsultasi</a>
         </div>
 
-        <button type="button" onClick={() => setMobileMenuOpen((v) => !v)} className="rounded-xl border border-[#dce8f5] bg-[#f5f9ff] p-2 text-[#123b78] lg:hidden" aria-label="Buka menu navigasi" aria-expanded={mobileMenuOpen}>{mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
+        <button type="button" onClick={() => setMobileMenuOpen((v) => !v)} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#dce8f5] bg-[#f5f9ff] p-2 text-[#123b78] lg:hidden" aria-label="Buka menu navigasi" aria-expanded={mobileMenuOpen}>{mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
       </nav>
 
-      {mobileMenuOpen && <div className="border-t border-[#e7f0fb] bg-white px-4 pb-5 pt-3 shadow-xl lg:hidden">
+      {mobileMenuOpen && <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-[#e7f0fb] bg-white px-3 pb-5 pt-3 shadow-xl lg:hidden">
         <div className="mx-auto max-w-7xl space-y-1">
           {links.map((link) => <Link key={link.href} href={link.href} onClick={() => setMobileMenuOpen(false)} className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold ${pathname === link.href ? "bg-[#eaf4ff] text-[#1765c0]" : "text-slate-600 hover:bg-[#f5f9ff] hover:text-[#1765c0]"}`}>{link.label}<ChevronDown className="h-3.5 w-3.5 -rotate-90 opacity-40" /></Link>)}
           <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="btn-neon mt-3 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold"><MessageCircle className="h-4 w-4" /> Hubungi Diki via WhatsApp</a>

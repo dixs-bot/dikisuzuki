@@ -24,7 +24,7 @@ export default function TestDrivePage() {
   );
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-10">
+    <div className="max-w-4xl mx-auto px-3 py-7 sm:px-6 sm:py-14 space-y-10">
       <div className="text-center max-w-2xl mx-auto space-y-3">
         <span className="text-xs font-bold uppercase tracking-wider text-[#168BFF] bg-[#eaf4ff] px-3 py-1 rounded-full">
           Layanan Gratis 100%
@@ -37,7 +37,7 @@ export default function TestDrivePage() {
         </p>
       </div>
 
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm">
+      <div className="bg-white rounded-3xl p-4 sm:p-10 border border-gray-200 shadow-sm">
         {submitted ? (
           <div className="text-center py-8 space-y-4">
             <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">

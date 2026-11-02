@@ -5,7 +5,7 @@ import { ShieldCheck, MessageCircle, FileText, CheckCircle2 } from "lucide-react
 
 export default function SimulasiPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12">
+    <div className="max-w-7xl mx-auto px-3 py-7 sm:px-6 sm:py-14 lg:px-8 space-y-12">
       {/* Title */}
       <div className="text-center max-w-3xl mx-auto space-y-3">
         <span className="text-xs font-bold uppercase tracking-wider text-[#168BFF] bg-[#eaf4ff] px-3 py-1 rounded-full">
@@ -23,7 +23,7 @@ export default function SimulasiPage() {
       <CreditSimulationWidget products={productsData} defaultProductId="xl7" />
 
       {/* Simulation Terms & Information */}
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm space-y-6">
+      <div className="bg-white rounded-3xl p-4 sm:p-10 border border-gray-200 shadow-sm space-y-6">
         <h2 className="text-xl font-bold text-[#123B78] flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-[#168BFF]" />
           <span>Ketentuan &amp; Keuntungan Kredit Bersama Diki Wahyudin</span>

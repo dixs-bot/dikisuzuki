@@ -3,7 +3,7 @@ import { MapPin, Phone, MessageCircle, Mail, Clock, ShieldCheck } from "lucide-r
 
 export default function KontakPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12">
+    <div className="max-w-7xl mx-auto px-3 py-7 sm:px-6 sm:py-14 lg:px-8 space-y-12">
       <div className="text-center max-w-3xl mx-auto space-y-3">
         <span className="text-xs font-bold uppercase tracking-wider text-[#168BFF] bg-[#eaf4ff] px-3 py-1 rounded-full">
           Kontak &amp; Dealer Resmi
@@ -19,7 +19,7 @@ export default function KontakPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Contact Cards */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-6">
+          <div className="bg-white rounded-3xl p-4 sm:p-8 border border-gray-200 shadow-sm space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-2xl bg-[#168BFF] text-white flex items-center justify-center font-black text-2xl shadow">
                 DW
@@ -97,7 +97,7 @@ export default function KontakPage() {
         </div>
 
         {/* Map and Location Details */}
-        <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-6">
+        <div className="lg:col-span-7 bg-white rounded-3xl p-4 sm:p-8 border border-gray-200 shadow-sm space-y-6">
           <h2 className="text-xl font-bold text-[#123B78]">Lokasi Dealer NJS Ahmad Yani Bandung</h2>
           <p className="text-xs text-gray-600 leading-relaxed">
             Terletak di jalan protokol Ahmad Yani No. 259, showroom kami mudah dijangkau dari seluruh penjuru Bandung, Cimahi, dan sekitarnya. Kami melayani kunjungan showroom, tes kendara, hingga tukar tambah kendaraan lama Anda.

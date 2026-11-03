@@ -1,106 +1,124 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import type React from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
-import { slugify, type Article } from "@/lib/articles";
-import { FileText, Plus, Pencil, Trash2, ExternalLink, Save, X, RefreshCw } from "lucide-react";
+import { Article, ArticlePackage, parseArticleMarkdown, slugify } from "@/lib/articles";
+import { FileText, FileUp, ImagePlus, Pencil, Trash2, ExternalLink, Save, X, RefreshCw, CheckCircle2 } from "lucide-react";
 
-type ArticleForm = {
-  id?: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  cover_image_url: string;
-  author: string;
-  status: "draft" | "published";
-  seo_title: string;
-  seo_description: string;
-};
-const emptyForm: ArticleForm = { title: "", slug: "", excerpt: "", content: "", cover_image_url: "", author: "Diki Wahyudin", status: "draft", seo_title: "", seo_description: "" };
+type FormState = ArticlePackage & { id?: string; cover_image_url: string; status: "draft" | "published" };
+const blank: FormState = { title:"", slug:"", excerpt:"", author:"Diki Wahyudin", category:"Tips & Informasi Suzuki", seo_title:"", seo_description:"", focus_keyword:"", seo_keywords:[], content:"", cover_image_url:"", status:"draft" };
 
 export default function AdminArticlesPage() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [form, setForm] = useState<ArticleForm>(emptyForm);
-  const [editing, setEditing] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
-  const [slugTouched, setSlugTouched] = useState(false);
-  const generatedSlug = useMemo(() => slugify(form.title), [form.title]);
+  const [articles,setArticles]=useState<Article[]>([]);
+  const [form,setForm]=useState<FormState>(blank);
+  const [editing,setEditing]=useState(false);
+  const [loading,setLoading]=useState(true);
+  const [saving,setSaving]=useState(false);
+  const [uploading,setUploading]=useState(false);
+  const [error,setError]=useState("");
+  const [notice,setNotice]=useState("");
+  const [importName,setImportName]=useState("");
 
-  async function loadArticles() {
+  const loadArticles=useCallback(async()=>{
     setLoading(true); setError("");
-    const { data, error: queryError } = await supabase.from("articles").select("*").order("created_at", { ascending: false });
-    if (queryError) setError(queryError.message.includes("articles") ? "Tabel articles belum tersedia. Jalankan migration 04_articles.sql di Supabase SQL Editor." : queryError.message);
-    setArticles((data || []) as Article[]); setLoading(false);
-  }
-  useEffect(() => { void loadArticles(); }, []);
+    const {data,error}=await supabase.from("articles").select("*").order("created_at",{ascending:false});
+    if(error) setError(error.message);
+    setArticles((data||[]) as Article[]); setLoading(false);
+  },[]);
+  useEffect(()=>{void loadArticles();},[loadArticles]);
 
-  function startNew() { setForm(emptyForm); setEditing(true); setSlugTouched(false); setNotice(""); setError(""); }
-  function startEdit(article: Article) {
-    setForm({ id: article.id, title: article.title, slug: article.slug, excerpt: article.excerpt || "", content: article.content || "", cover_image_url: article.cover_image_url || "", author: article.author || "Diki Wahyudin", status: article.status, seo_title: article.seo_title || "", seo_description: article.seo_description || "" });
-    setEditing(true); setSlugTouched(true); setNotice(""); setError("");
-  }
-  async function uploadCover(file?: File) {
-    if (!file) return;
-    if (!file.type.startsWith("image/") || !["image/jpeg", "image/png", "image/webp"].includes(file.type)) { setError("Gunakan gambar JPG, PNG, atau WebP."); return; }
-    if (file.size > 5 * 1024 * 1024) { setError("Ukuran gambar maksimal 5 MB."); return; }
-    setUploading(true); setError("");
-    const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
-    const path = `${Date.now()}-${crypto.randomUUID()}.${extension}`;
-    const { error: uploadError } = await supabase.storage.from("article-covers").upload(path, file, { cacheControl: "3600", upsert: false, contentType: file.type });
-    if (uploadError) setError(`Upload gambar gagal: ${uploadError.message}. Pastikan migration 04_articles.sql sudah dijalankan.`);
-    else {
-      const { data } = supabase.storage.from("article-covers").getPublicUrl(path);
-      setForm((current) => ({ ...current, cover_image_url: data.publicUrl }));
-      setNotice("Gambar sampul berhasil diunggah.");
-    }
+  const importFile=async(event:ChangeEvent<HTMLInputElement>)=>{
+    const file=event.target.files?.[0]; if(!file)return;
+    setError(""); setNotice("");
+    if(!file.name.toLowerCase().endsWith(".md")){setError("Gunakan file artikel berformat .md (Markdown).");event.target.value="";return;}
+    if(file.size>500*1024){setError("File artikel maksimal 500 KB.");event.target.value="";return;}
+    try{
+      const parsed=parseArticleMarkdown(await file.text());
+      setForm({...blank,...parsed,status:"draft"});
+      setImportName(file.name); setEditing(true);
+      setNotice("Artikel berhasil diimpor. Periksa preview, lalu unggah foto sampul Anda.");
+    }catch(e){setError(e instanceof Error?e.message:"File artikel tidak dapat dibaca.");}
+    event.target.value="";
+  };
+
+  const uploadCover=async(file?:File)=>{
+    if(!file)return;
+    if(!["image/jpeg","image/png","image/webp"].includes(file.type)){setError("Gunakan JPG, PNG, atau WebP.");return;}
+    if(file.size>5*1024*1024){setError("Foto sampul maksimal 5 MB.");return;}
+    setUploading(true);setError("");
+    const ext=file.name.split(".").pop()?.toLowerCase()||"jpg";
+    const path=`${Date.now()}-${crypto.randomUUID()}.${ext}`;
+    const {error}=await supabase.storage.from("article-covers").upload(path,file,{cacheControl:"3600",upsert:false,contentType:file.type});
+    if(error)setError(`Upload foto gagal: ${error.message}`);
+    else {const {data}=supabase.storage.from("article-covers").getPublicUrl(path);setForm(v=>({...v,cover_image_url:data.publicUrl}));setNotice("Foto sampul tersimpan di Supabase Storage.");}
     setUploading(false);
-  }
+  };
 
-  async function saveArticle(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setSaving(true); setError(""); setNotice("");
-    const payload = {
-      title: form.title.trim(), slug: (form.slug || generatedSlug).trim(), excerpt: form.excerpt.trim(), content: form.content.trim(),
-      cover_image_url: form.cover_image_url.trim() || null, author: form.author.trim() || "Diki Wahyudin", status: form.status,
-      seo_title: form.seo_title.trim() || null, seo_description: form.seo_description.trim() || null,
+  const save=async(event:React.FormEvent<HTMLFormElement>)=>{
+    event.preventDefault();setSaving(true);setError("");setNotice("");
+    const payload={
+      title:form.title.trim(),slug:slugify(form.slug||form.title),excerpt:form.excerpt.trim(),content:form.content.trim(),
+      cover_image_url:form.cover_image_url||null,author:form.author.trim()||"Diki Wahyudin",status:form.status,
+      seo_title:form.seo_title.trim()||form.title.trim(),seo_description:form.seo_description.trim()||form.excerpt.trim(),
+      focus_keyword:form.focus_keyword.trim()||null,seo_keywords:form.seo_keywords,category:form.category.trim()||"Tips & Informasi Suzuki",
     };
-    if (!payload.title || !payload.slug || !payload.content) { setError("Judul, slug, dan isi artikel wajib diisi."); setSaving(false); return; }
-    const query = form.id ? supabase.from("articles").update(payload).eq("id", form.id) : supabase.from("articles").insert(payload);
-    const { error: saveError } = await query;
-    if (saveError) setError(saveError.code === "23505" ? "Slug sudah digunakan. Ubah slug artikel ini." : saveError.message);
-    else { setNotice(form.id ? "Artikel berhasil diperbarui." : "Artikel berhasil disimpan."); setEditing(false); setForm(emptyForm); await loadArticles(); }
+    if(!payload.title||!payload.slug||!payload.excerpt||!payload.content){setError("Judul, URL, ringkasan, dan isi artikel wajib tersedia.");setSaving(false);return;}
+    const query=form.id?supabase.from("articles").update(payload).eq("id",form.id):supabase.from("articles").insert(payload);
+    const {error}=await query;
+    if(error)setError(error.code==="23505"?"Slug artikel sudah digunakan. Ubah slug sebelum menyimpan.":error.message);
+    else{setNotice(form.status==="published"?"Artikel berhasil diterbitkan dan disimpan ke Supabase.":"Artikel berhasil disimpan sebagai draft.");setEditing(false);setForm(blank);setImportName("");await loadArticles();}
     setSaving(false);
-  }
-  async function deleteArticle(article: Article) {
-    if (!window.confirm(`Hapus artikel “${article.title}”? Tindakan ini tidak dapat dibatalkan.`)) return;
-    const { error: deleteError } = await supabase.from("articles").delete().eq("id", article.id);
-    if (deleteError) setError(deleteError.message); else { setNotice("Artikel berhasil dihapus."); await loadArticles(); }
-  }
+  };
 
-  return <main className="min-h-screen bg-[#f5f9ff] px-4 py-8 sm:px-6 lg:px-8"><div className="mx-auto max-w-7xl space-y-6">
-    <header className="flex flex-col justify-between gap-4 rounded-3xl border border-[#dce8f5] bg-white p-6 shadow-sm sm:flex-row sm:items-center"><div><Link href="/admin/dashboard" className="text-xs font-semibold text-blue-700 hover:underline">← Kembali ke dashboard</Link><h1 className="mt-2 text-2xl font-extrabold text-[#123b78]">Manajemen Artikel</h1><p className="mt-1 text-sm text-slate-500">Tulis, edit, simpan sebagai draft, dan terbitkan artikel website.</p></div><div className="flex flex-wrap gap-2"><button onClick={() => void loadArticles()} className="inline-flex items-center gap-2 rounded-xl border border-[#dce8f5] px-4 py-2.5 text-sm font-bold text-[#1765c0]"><RefreshCw className="h-4 w-4"/> Refresh</button><button onClick={startNew} className="inline-flex items-center gap-2 rounded-xl bg-[#123b78] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#0d2d59]"><Plus className="h-4 w-4"/> Tulis Artikel</button></div></header>
-    {error && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div>}{notice && <div className="rounded-xl border border-green-200 bg-green-50 p-3 text-sm text-green-700">{notice}</div>}
-    {editing && <section className="rounded-3xl border border-[#dce8f5] bg-white p-5 shadow-sm sm:p-7"><div className="mb-5 flex items-center justify-between"><div><h2 className="text-lg font-extrabold text-[#123b78]">{form.id ? "Edit Artikel" : "Artikel Baru"}</h2><p className="mt-1 text-xs text-slate-500">Isi konten dan tentukan status publikasi.</p></div><button onClick={() => setEditing(false)} aria-label="Tutup formulir" className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"><X className="h-5 w-5"/></button></div>
-      <form onSubmit={saveArticle} className="grid gap-4 lg:grid-cols-2">
-        <label className="block text-sm font-semibold text-slate-700 lg:col-span-2">Judul artikel *<input required maxLength={180} value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value, slug: slugTouched ? form.slug : slugify(e.target.value) })} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="Contoh: Tips Memilih Mobil Suzuki untuk Keluarga"/></label>
-        <label className="block text-sm font-semibold text-slate-700">Slug URL *<input required value={form.slug} onChange={(e) => { setSlugTouched(true); setForm({ ...form, slug: slugify(e.target.value) }); }} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal outline-none focus:border-blue-500" placeholder={generatedSlug}/><span className="mt-1 block text-[11px] font-normal text-slate-400">URL: /artikel/{form.slug || generatedSlug || "judul-artikel"}</span></label>
-        <label className="block text-sm font-semibold text-slate-700">Penulis<input value={form.author} onChange={(e) => setForm({ ...form, author: e.target.value })} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal outline-none focus:border-blue-500"/></label>
-        <label className="block text-sm font-semibold text-slate-700 lg:col-span-2">Ringkasan artikel *<textarea required rows={3} maxLength={320} value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal outline-none focus:border-blue-500" placeholder="Ringkasan singkat yang tampil pada daftar artikel dan hasil pencarian."/></label>
-        <div className="block text-sm font-semibold text-slate-700 lg:col-span-2"><label>Gambar sampul (opsional)<input type="file" accept="image/png,image/jpeg,image/webp" disabled={uploading} onChange={(e) => void uploadCover(e.target.files?.[0])} className="mt-2 block w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-normal file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:font-semibold file:text-blue-700"/></label><p className="mt-1 text-[11px] font-normal text-slate-400">{uploading ? "Mengunggah gambar..." : "JPG, PNG, WebP maksimal 5 MB. Gambar disimpan di Supabase Storage."}</p>{form.cover_image_url && <div className="mt-3 flex items-center gap-3"><img src={form.cover_image_url} alt="Preview sampul" className="h-20 w-32 rounded-lg object-cover"/><button type="button" onClick={() => setForm({ ...form, cover_image_url: "" })} className="text-xs font-semibold text-red-600">Hapus pilihan gambar</button></div>}</div>
-        <label className="block text-sm font-semibold text-slate-700 lg:col-span-2">Isi artikel *<textarea required rows={14} value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal leading-7 outline-none focus:border-blue-500" placeholder="Tulis artikel di sini. Pisahkan paragraf dengan baris baru."/></label>
-        <label className="block text-sm font-semibold text-slate-700">SEO title<input maxLength={70} value={form.seo_title} onChange={(e) => setForm({ ...form, seo_title: e.target.value })} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal outline-none focus:border-blue-500" placeholder="Judul untuk Google (opsional)"/></label>
-        <label className="block text-sm font-semibold text-slate-700">SEO description<input maxLength={160} value={form.seo_description} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal outline-none focus:border-blue-500" placeholder="Deskripsi untuk Google (opsional)"/></label>
-        <label className="block text-sm font-semibold text-slate-700">Status publikasi<select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value as "draft" | "published" })} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 font-normal outline-none focus:border-blue-500"><option value="draft">Draft — belum tampil di website</option><option value="published">Terbitkan — tampil untuk pengunjung</option></select></label>
-        <div className="flex flex-wrap items-end gap-2"><button disabled={saving} type="submit" className="inline-flex items-center gap-2 rounded-xl bg-[#123b78] px-5 py-3 text-sm font-bold text-white disabled:opacity-60"><Save className="h-4 w-4"/>{saving ? "Menyimpan..." : "Simpan Artikel"}</button><button type="button" onClick={() => setEditing(false)} className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-bold text-slate-600">Batal</button></div>
+  const edit=(a:Article)=>{
+    setForm({id:a.id,title:a.title,slug:a.slug,excerpt:a.excerpt||"",author:a.author||"Diki Wahyudin",category:a.category||"Tips & Informasi Suzuki",seo_title:a.seo_title||a.title,seo_description:a.seo_description||a.excerpt,focus_keyword:a.focus_keyword||"",seo_keywords:a.seo_keywords||[],content:a.content||"",cover_image_url:a.cover_image_url||"",status:a.status});
+    setEditing(true);setImportName("");setError("");setNotice("");
+  };
+  const remove=async(a:Article)=>{
+    if(!window.confirm(`Hapus artikel "${a.title}"?`))return;
+    const {error}=await supabase.from("articles").delete().eq("id",a.id);
+    if(error)setError(error.message);else{setNotice("Artikel berhasil dihapus.");await loadArticles();}
+  };
+
+  return <main className="min-h-screen bg-[#f5f9ff] px-4 py-8 sm:px-6"><div className="mx-auto max-w-7xl space-y-6">
+    <header className="rounded-3xl border border-[#dce8f5] bg-white p-6 shadow-sm">
+      <Link href="/admin/dashboard" className="text-xs font-semibold text-blue-700 hover:underline">← Kembali ke dashboard</Link>
+      <div className="mt-3 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><h1 className="text-2xl font-extrabold text-[#123b78]">Article Center</h1><p className="mt-1 text-sm text-slate-500">Impor artikel siap terbit dari ChatGPT. Anda cukup cek isi dan unggah foto sampul.</p></div><button onClick={()=>void loadArticles()} className="inline-flex items-center gap-2 self-start rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold text-blue-700"><RefreshCw className="h-4 w-4"/> Refresh</button></div>
+    </header>
+    {error&&<div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div>}
+    {notice&&<div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">{notice}</div>}
+    {!editing&&<section className="grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
+      <div className="rounded-3xl border border-blue-100 bg-white p-6 shadow-sm"><div className="flex items-center gap-3"><span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-700"><FileUp className="h-6 w-6"/></span><div><h2 className="text-lg font-extrabold text-[#123b78]">Upload Artikel Siap Pakai</h2><p className="text-xs text-slate-500">Pilih file Markdown (.md) yang saya siapkan untuk Anda.</p></div></div>
+        <label className="mt-5 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-blue-200 bg-blue-50/50 p-8 text-center hover:bg-blue-50"><FileUp className="h-9 w-9 text-blue-600"/><span className="mt-3 text-sm font-bold text-blue-800">Pilih file artikel .md</span><span className="mt-1 text-xs text-slate-500">Judul, isi, slug, ringkasan, dan SEO akan terisi otomatis</span><input type="file" accept=".md,text/markdown,text/plain" className="hidden" onChange={importFile}/></label>
+        <p className="mt-3 text-[11px] text-slate-500">Setelah import, Anda tinggal unggah foto sampul, lihat preview, lalu simpan sebagai draft atau terbitkan.</p>
+      </div>
+      <div className="rounded-3xl border border-blue-100 bg-white p-6 shadow-sm"><h2 className="font-extrabold text-[#123b78]">Cara kerja singkat</h2><ol className="mt-4 space-y-3 text-sm text-slate-600"><li className="flex gap-3"><b className="text-blue-700">01</b> Minta ChatGPT membuat artikel Suzuki.</li><li className="flex gap-3"><b className="text-blue-700">02</b> Simpan file artikel .md dari ChatGPT.</li><li className="flex gap-3"><b className="text-blue-700">03</b> Import file ke halaman ini.</li><li className="flex gap-3"><b className="text-blue-700">04</b> Upload foto sampul pilihan Anda.</li><li className="flex gap-3"><b className="text-blue-700">05</b> Preview, lalu terbitkan.</li></ol></div>
+    </section>}
+    {editing&&<section className="rounded-3xl border border-blue-100 bg-white p-5 shadow-sm sm:p-7">
+      <div className="mb-5 flex items-start justify-between"><div><h2 className="text-xl font-extrabold text-[#123b78]">Review & Terbitkan Artikel</h2><p className="mt-1 text-xs text-slate-500">{importName?`File: ${importName}`:"Edit artikel tersimpan"}</p></div><button onClick={()=>setEditing(false)} className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"><X/></button></div>
+      <form onSubmit={save} className="grid gap-4 lg:grid-cols-2">
+        <label className="text-sm font-semibold text-slate-700 lg:col-span-2">Judul artikel<input required value={form.title} onChange={e=>setForm(v=>({...v,title:e.target.value,slug:v.slug===slugify(v.title)?slugify(e.target.value):v.slug}))} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal" /></label>
+        <label className="text-sm font-semibold text-slate-700">URL / Slug<input required value={form.slug} onChange={e=>setForm(v=>({...v,slug:slugify(e.target.value)}))} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal"/><span className="text-[11px] font-normal text-slate-400">/artikel/{form.slug}</span></label>
+        <label className="text-sm font-semibold text-slate-700">Kategori<input value={form.category} onChange={e=>setForm(v=>({...v,category:e.target.value}))} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal"/></label>
+        <label className="text-sm font-semibold text-slate-700 lg:col-span-2">Ringkasan artikel<textarea rows={2} value={form.excerpt} onChange={e=>setForm(v=>({...v,excerpt:e.target.value}))} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal"/></label>
+        <div className="lg:col-span-2"><label className="text-sm font-semibold text-slate-700">Foto sampul (Anda yang upload)<input type="file" accept="image/jpeg,image/png,image/webp" disabled={uploading} onChange={e=>void uploadCover(e.target.files?.[0])} className="mt-2 block w-full rounded-xl border border-slate-200 p-3 text-xs file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:font-bold file:text-blue-700"/></label><p className="mt-1 text-[11px] text-slate-400">{uploading?"Mengunggah foto...":"JPG / PNG / WebP maksimal 5 MB. Disimpan ke Supabase Storage."}</p>{form.cover_image_url&&<img src={form.cover_image_url} alt="Preview foto sampul" className="mt-3 h-36 w-64 rounded-xl border object-cover"/>}</div>
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 lg:col-span-2"><h3 className="font-bold text-[#123b78]">SEO otomatis</h3><div className="mt-3 grid gap-3 sm:grid-cols-2"><label className="text-xs font-semibold text-slate-600">SEO title<input value={form.seo_title} onChange={e=>setForm(v=>({...v,seo_title:e.target.value}))} maxLength={70} className="mt-1.5 w-full rounded-lg border p-2.5 text-sm font-normal"/></label><label className="text-xs font-semibold text-slate-600">Focus keyword<input value={form.focus_keyword} onChange={e=>setForm(v=>({...v,focus_keyword:e.target.value}))} className="mt-1.5 w-full rounded-lg border p-2.5 text-sm font-normal"/></label><label className="text-xs font-semibold text-slate-600 sm:col-span-2">SEO description<textarea rows={2} value={form.seo_description} onChange={e=>setForm(v=>({...v,seo_description:e.target.value}))} maxLength={160} className="mt-1.5 w-full rounded-lg border p-2.5 text-sm font-normal"/></label><label className="text-xs font-semibold text-slate-600 sm:col-span-2">Keyword pendukung (pisahkan koma)<input value={form.seo_keywords.join(", ")} onChange={e=>setForm(v=>({...v,seo_keywords:e.target.value.split(",").map(x=>x.trim()).filter(Boolean)}))} className="mt-1.5 w-full rounded-lg border p-2.5 text-sm font-normal"/></label></div></div>
+        <div className="lg:col-span-2"><h3 className="font-bold text-[#123b78]">Preview isi artikel</h3><div className="article-content mt-2 max-h-[440px] overflow-auto rounded-2xl border border-slate-200 p-5 text-sm leading-7 text-slate-700"><MarkdownPreview content={form.content}/></div></div>
+        <label className="text-sm font-semibold text-slate-700">Status publikasi<select value={form.status} onChange={e=>setForm(v=>({...v,status:e.target.value as "draft"|"published"}))} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3"><option value="draft">Simpan Draft</option><option value="published">Terbitkan ke Website</option></select></label>
+        <div className="flex flex-wrap items-end gap-2"><button disabled={saving||uploading} className="inline-flex items-center gap-2 rounded-xl bg-[#123b78] px-5 py-3 text-sm font-bold text-white disabled:opacity-50"><Save className="h-4 w-4"/>{saving?"Menyimpan...":form.status==="published"?"Terbitkan Artikel":"Simpan Draft"}</button><button type="button" onClick={()=>{setEditing(false);setForm(blank);}} className="rounded-xl border px-5 py-3 text-sm font-bold text-slate-600">Batal</button></div>
       </form>
     </section>}
-    <section className="overflow-hidden rounded-3xl border border-[#dce8f5] bg-white shadow-sm"><div className="flex items-center justify-between border-b border-slate-100 p-5"><div><h2 className="font-extrabold text-[#123b78]">Daftar Artikel</h2><p className="mt-1 text-xs text-slate-500">{articles.length} artikel tersimpan</p></div><FileText className="h-6 w-6 text-blue-600"/></div>
-      {loading ? <p className="p-10 text-center text-sm text-slate-400">Memuat artikel...</p> : articles.length ? <div className="divide-y divide-slate-100">{articles.map((article) => <div key={article.id} className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between"><div className="min-w-0"><div className="flex flex-wrap items-center gap-2"><h3 className="font-bold text-[#123b78]">{article.title}</h3><span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${article.status === "published" ? "bg-green-50 text-green-700" : "bg-amber-50 text-amber-700"}`}>{article.status === "published" ? "Terbit" : "Draft"}</span></div><p className="mt-1 line-clamp-2 text-xs text-slate-500">{article.excerpt}</p><p className="mt-2 text-[11px] text-slate-400">/artikel/{article.slug} · {new Date(article.updated_at).toLocaleDateString("id-ID")}</p></div><div className="flex shrink-0 gap-2"><button onClick={() => startEdit(article)} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50"><Pencil className="h-3.5 w-3.5"/> Edit</button>{article.status === "published" && <Link href={`/artikel/${article.slug}`} target="_blank" className="inline-flex items-center gap-2 rounded-lg border border-blue-100 px-3 py-2 text-xs font-bold text-blue-700 hover:bg-blue-50"><ExternalLink className="h-3.5 w-3.5"/> Lihat</Link>}<button onClick={() => void deleteArticle(article)} className="inline-flex items-center gap-2 rounded-lg border border-red-100 px-3 py-2 text-xs font-bold text-red-600 hover:bg-red-50"><Trash2 className="h-3.5 w-3.5"/> Hapus</button></div></div>)}</div> : <div className="p-12 text-center"><FileText className="mx-auto h-10 w-10 text-blue-200"/><p className="mt-3 font-bold text-[#123b78]">Belum ada artikel</p><p className="mt-1 text-sm text-slate-500">Klik “Tulis Artikel” untuk membuat artikel pertama.</p></div>}
+    <section className="overflow-hidden rounded-3xl border border-blue-100 bg-white shadow-sm"><div className="border-b p-5"><h2 className="font-extrabold text-[#123b78]">Artikel tersimpan · {articles.length}</h2></div>
+      {loading?<p className="p-8 text-center text-sm text-slate-500">Memuat...</p>:articles.length?<div className="divide-y">{articles.map(a=><div key={a.id} className="flex flex-col justify-between gap-3 p-5 sm:flex-row sm:items-center"><div className="min-w-0"><div className="flex flex-wrap items-center gap-2"><b className="text-[#123b78]">{a.title}</b><span className={`rounded-full px-2 py-1 text-[10px] font-bold ${a.status==="published"?"bg-emerald-50 text-emerald-700":"bg-amber-50 text-amber-700"}`}>{a.status==="published"?"Terbit":"Draft"}</span></div><p className="mt-1 line-clamp-2 text-xs text-slate-500">{a.excerpt}</p><p className="mt-1 text-[11px] text-slate-400">/artikel/{a.slug}</p></div><div className="flex gap-2"><button onClick={()=>edit(a)} className="rounded-lg border px-3 py-2 text-xs font-bold"><Pencil className="mr-1 inline h-3 w-3"/>Edit</button>{a.status==="published"&&<Link href={`/artikel/${a.slug}`} target="_blank" className="rounded-lg border border-blue-100 px-3 py-2 text-xs font-bold text-blue-700"><ExternalLink className="mr-1 inline h-3 w-3"/>Lihat</Link>}<button onClick={()=>void remove(a)} className="rounded-lg border border-red-100 px-3 py-2 text-xs font-bold text-red-600"><Trash2 className="mr-1 inline h-3 w-3"/>Hapus</button></div></div>)}</div>:<div className="p-10 text-center text-sm text-slate-500">Belum ada artikel. Import file Markdown pertama Anda.</div>}
     </section>
   </div></main>;
 }
+
+function MarkdownPreview({content}:{content:string}) {
+  const lines=content.split("\\n"); const nodes:React.ReactNode[]=[]; let list:string[]=[];
+  const flush=()=>{if(list.length){nodes.push(<ul key={`list-${nodes.length}`} className="my-3 list-disc space-y-1 pl-6">{list.map((x,i)=><li key={i}>{inline(x)}</li>)}</ul>);list=[];}};
+  lines.forEach((raw,i)=>{const line=raw.trim();if(!line){flush();return;}if(line.startsWith("# ")){flush();nodes.push(<h2 key={i} className="my-4 text-xl font-bold text-[#123b78]">{inline(line.slice(2))}</h2>);}else if(line.startsWith("## ")){flush();nodes.push(<h3 key={i} className="my-3 text-lg font-bold text-[#123b78]">{inline(line.slice(3))}</h3>);}else if(line.startsWith("### ")){flush();nodes.push(<h4 key={i} className="my-2 font-bold text-[#123b78]">{inline(line.slice(4))}</h4>);}else if(/^[-*] /.test(line)){list.push(line.slice(2));}else{flush();nodes.push(<p key={i} className="my-2">{inline(line)}</p>);}});flush();return <>{nodes}</>;
+}
+function inline(value:string):React.ReactNode {const parts=value.split(/(\\*\\*[^*]+\\*\\*)/g);return parts.map((p,i)=>p.startsWith("**")&&p.endsWith("**")?<strong key={i}>{p.slice(2,-2)}</strong>:p);}

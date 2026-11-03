@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CalendarDays, ChevronLeft } from "lucide-react";
 import { getPublicSupabase, type Article } from "@/lib/articles";
+import ArticleMarkdown from "@/components/ArticleMarkdown";
 
 export const revalidate = 60;
 async function getArticle(slug: string) {
@@ -19,6 +20,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: article.seo_title || article.title,
     description: article.seo_description || article.excerpt,
     alternates: { canonical: `/artikel/${article.slug}` },
+    keywords: [article.focus_keyword, ...(article.seo_keywords || [])].filter(Boolean) as string[],
     openGraph: { type: "article", title: article.seo_title || article.title, description: article.seo_description || article.excerpt, images: article.cover_image_url ? [article.cover_image_url] : [] },
   };
 }
@@ -34,7 +36,7 @@ export default async function ArticleDetailPage({ params }: { params: { slug: st
       {article.excerpt && <p className="mt-7 border-l-4 border-blue-500 pl-4 text-lg leading-8 text-slate-600">{article.excerpt}</p>}
     </header>
     {article.cover_image_url && <img src={article.cover_image_url} alt={article.title} className="mt-9 max-h-[480px] w-full rounded-2xl object-cover" />}
-    <div className="article-content mt-10 whitespace-pre-wrap text-[15px] leading-8 text-slate-700">{article.content}</div>
+    <div className="mt-10"><ArticleMarkdown content={article.content} /></div>
     <footer className="mt-14 border-t border-slate-200 pt-7"><p className="text-sm text-slate-600">Butuh informasi lebih lanjut tentang mobil Suzuki?</p><Link href="/kontak" className="mt-3 inline-flex rounded-xl bg-[#123b78] px-5 py-3 text-sm font-bold text-white hover:bg-[#0d2d59]">Hubungi Diki Wahyudin</Link></footer>
   </article></main>;
 }

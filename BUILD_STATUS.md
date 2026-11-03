@@ -54,3 +54,12 @@ Ditambahkan pada build ini: tabel `articles` beserta RLS, halaman daftar dan det
 - Added customer-side color filtering guard to prevent cross-color gallery mixing.
 - Added migration 05 with composite product/color foreign key and checks for new gallery rows.
 - Requires running migration 05 in the connected Supabase project before deploying this version.
+
+
+## V11 — Product gallery color slideshow
+- Catalog product cards now load `products.main_image_url`, product colors, and color-matched `vehicle_photos` from Supabase.
+- Clicking a color swatch changes the card image set; multiple images auto-advance every 4 seconds with manual controls.
+- Product detail defaults to `products.main_image_url` and switches to color-specific uploaded photos, with auto slideshow for multiple photos.
+- Vehicle image wrappers use white/transparent backgrounds and `object-contain`.
+- Admin gallery previews/list cards use `object-contain`; transparent PNG guidance added.
+- Production build not verified in this environment; verify after deployment.

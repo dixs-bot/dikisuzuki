@@ -16,6 +16,7 @@ import {
   Sparkles,
   ArrowLeft,
   ChevronRight,
+  ChevronLeft,
   Maximize2,
   X,
 } from "lucide-react";
@@ -31,14 +32,17 @@ export default function ProductDetailPage({
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [dbColors, setDbColors] = useState<Array<{ id: string; name: string; hex_code: string }>>([]);
+  const [mainImageUrl, setMainImageUrl] = useState("");
+  const [colorWasManuallySelected, setColorWasManuallySelected] = useState(false);
   const [dbPhotos, setDbPhotos] = useState<Array<{ id: string; title: string; image_url: string; color_id: string | null; category: string }>>([]);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
   useEffect(() => {
     let alive = true;
     const loadGallery = async () => {
-      const { data: dbProduct } = await supabase.from("products").select("id").eq("slug", params.slug).maybeSingle();
+      const { data: dbProduct } = await supabase.from("products").select("id, main_image_url").eq("slug", params.slug).maybeSingle();
       if (!dbProduct || !alive) return;
+      setMainImageUrl(dbProduct.main_image_url || "");
       const [{ data: colorRows }, { data: photoRows }] = await Promise.all([
         supabase.from("vehicle_colors").select("id, name, hex_code").eq("product_id", dbProduct.id).order("sort_order"),
         supabase.from("vehicle_photos").select("id, title, image_url, color_id, category").eq("product_id", dbProduct.id).order("sort_order"),
@@ -71,7 +75,18 @@ export default function ProductDetailPage({
     [dbPhotos, dbColors.length, selectedColorId],
   );
   const activePhoto = visiblePhotos[activePhotoIndex] || visiblePhotos[0];
+  // Main image from products.main_image_url is the default visual until
+  // color-specific gallery photos are uploaded for the selected color.
+  const displayImageUrl = activePhoto?.image_url || (!colorWasManuallySelected ? mainImageUrl : "");
   const activeVariant = product.variants[selectedVariantIndex] || product.variants[0];
+
+  useEffect(() => {
+    if (visiblePhotos.length <= 1) return;
+    const timer = window.setInterval(() => {
+      setActivePhotoIndex((current) => (current + 1) % visiblePhotos.length);
+    }, 4000);
+    return () => window.clearInterval(timer);
+  }, [visiblePhotos.length, selectedColorId]);
 
   const waLeadMsg = `Halo Kang Diki Wahyudin, saya ingin konsultasi pembelian Suzuki ${product.name} tipe ${activeVariant?.name} (Warna: ${activeColor?.name}). Mohon info penawaran diskon cashback dan paket kredit DP minimnya.`;
 
@@ -111,11 +126,31 @@ export default function ProductDetailPage({
             </button>
 
             <div className="w-full space-y-3 py-3">
-              <div className="relative flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl sm:min-h-[360px] sm:rounded-2xl border border-[#dce8f5] bg-gradient-to-br from-[#f5f9ff] to-[#eaf4ff] p-3 sm:min-h-[360px]">
-                {activePhoto ? <img src={activePhoto.image_url} alt={activePhoto.title} className="max-h-[360px] w-full rounded-xl object-contain" /> : <div className="text-center"><div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full border border-[#b9d9fb] bg-white text-4xl font-black text-[#168bff] shadow-[0_12px_35px_rgba(22,139,255,.12)]">{product.name.slice(0, 1)}</div><h3 className="mt-4 text-xl font-extrabold text-[#123b78]">{product.name}</h3><p className="mt-1 text-xs text-slate-500">{activeColor.name} · Foto kendaraan akan tampil setelah diunggah admin</p></div>}
-                {activePhoto && <button type="button" onClick={() => setLightboxOpen(true)} className="absolute bottom-4 right-4 rounded-xl border border-white bg-white/90 p-2.5 text-[#1765c0] shadow-md hover:text-[#168bff]" title="Perbesar foto"><Maximize2 className="h-4 w-4" /></button>}
+              <div className="relative flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl border border-[#dce8f5] bg-white p-2 sm:min-h-[360px] sm:rounded-2xl sm:p-4">
+                {displayImageUrl ? (
+                  <img
+                    key={`${selectedColorId || "default"}-${displayImageUrl}`}
+                    src={displayImageUrl}
+                    alt={activePhoto?.title || `${product.name} warna ${activeColor.name}`}
+                    className="max-h-[360px] w-full object-contain object-center"
+                    style={{ background: "transparent" }}
+                  />
+                ) : (
+                  <div className="text-center">
+                    <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full border border-[#b9d9fb] bg-[#f8fbff] text-4xl font-black text-[#168bff]">{product.name.slice(0, 1)}</div>
+                    <h3 className="mt-4 text-xl font-extrabold text-[#123b78]">{product.name}</h3>
+                    <p className="mt-1 text-xs text-slate-500">Foto utama belum diatur. Admin dapat mengunggah PNG transparan untuk warna {activeColor.name}.</p>
+                  </div>
+                )}
+                {displayImageUrl && <button type="button" onClick={() => setLightboxOpen(true)} className="absolute bottom-4 right-4 rounded-xl border border-[#dce8f5] bg-white/95 p-2.5 text-[#1765c0] shadow-md hover:text-[#168bff]" title="Perbesar foto"><Maximize2 className="h-4 w-4" /></button>}
+                {visiblePhotos.length > 1 && (
+                  <>
+                    <button type="button" aria-label="Foto sebelumnya" onClick={() => setActivePhotoIndex((activePhotoIndex - 1 + visiblePhotos.length) % visiblePhotos.length)} className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-slate-200 bg-white/95 p-2 text-slate-700 shadow-sm"><ChevronLeft className="h-4 w-4" /></button>
+                    <button type="button" aria-label="Foto berikutnya" onClick={() => setActivePhotoIndex((activePhotoIndex + 1) % visiblePhotos.length)} className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-slate-200 bg-white/95 p-2 text-slate-700 shadow-sm"><ChevronRight className="h-4 w-4" /></button>
+                  </>
+                )}
               </div>
-              {visiblePhotos.length > 1 && <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">{visiblePhotos.map((photo, index) => <button key={photo.id} type="button" onClick={() => setActivePhotoIndex(index)} className={`overflow-hidden rounded-xl border-2 bg-white ${activePhotoIndex === index ? "border-[#168bff] shadow-[0_0_0_3px_rgba(22,139,255,.12)]" : "border-[#dce8f5]"}`}><img src={photo.image_url} alt={photo.title} className="aspect-[4/3] w-full object-cover" /></button>)}</div>}
+              {visiblePhotos.length > 1 && <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">{visiblePhotos.map((photo, index) => <button key={photo.id} type="button" onClick={() => setActivePhotoIndex(index)} className={`overflow-hidden rounded-xl border-2 bg-white ${activePhotoIndex === index ? "border-[#168bff] shadow-[0_0_0_3px_rgba(22,139,255,.12)]" : "border-[#dce8f5]"}`}><img src={photo.image_url} alt={photo.title} className="aspect-[4/3] w-full bg-white object-contain p-1" /></button>)}</div>}
               <p className="text-center text-[11px] text-slate-400">{visiblePhotos.length ? `${visiblePhotos.length} foto untuk warna ${activeColor.name}` : "Galeri foto warna ini belum tersedia."}</p>
             </div>
           </div>
@@ -130,7 +165,7 @@ export default function ProductDetailPage({
                 <button
                   key={i}
                   type="button"
-                  onClick={() => { setActiveColorIndex(i); setActivePhotoIndex(0); }}
+                  onClick={() => { setActiveColorIndex(i); setActivePhotoIndex(0); setColorWasManuallySelected(true); }}
                   className={`flex items-center gap-2.5 px-3 py-2 rounded-xl border text-xs font-medium transition ${
                     activeColorIndex === i
                       ? "border-[#123B78] bg-blue-50/50 shadow-sm ring-1 ring-[#123B78]"
@@ -309,7 +344,7 @@ export default function ProductDetailPage({
             <h3 className="text-lg font-bold text-[#123B78] mb-4">
               Galeri Tampilan: {product.name}
             </h3>
-            <div className="flex min-h-64 items-center justify-center rounded-2xl bg-[#f5f9ff] p-3">{activePhoto ? <img src={activePhoto.image_url} alt={activePhoto.title} className="max-h-[65vh] w-full rounded-xl object-contain" /> : <p className="text-sm text-slate-500">Belum ada foto untuk warna {activeColor.name}.</p>}</div>
+            <div className="flex min-h-64 items-center justify-center rounded-2xl bg-white p-3">{displayImageUrl ? <img src={displayImageUrl} alt={activePhoto?.title || `${product.name} ${activeColor.name}`} className="max-h-[65vh] w-full object-contain" style={{ background: "transparent" }} /> : <p className="text-sm text-slate-500">Belum ada foto untuk warna {activeColor.name}.</p>}</div>
             <div className="mt-6 flex justify-end">
               <button
                 type="button"

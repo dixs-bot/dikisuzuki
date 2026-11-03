@@ -151,24 +151,24 @@ INSERT INTO public.vehicle_colors (
 ) ON CONFLICT (id) DO NOTHING;
 
 
-INSERT INTO public.vehicle_colors (
-    id, product_id, name, hex_code, image_url, is_two_tone, sort_order
-) VALUES (
-    'c0010000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000001', 'Magma Red', '#8B1A1A', 'newxl7.png', FALSE, 2
-) ON CONFLICT (id) DO NOTHING;
-
-
-INSERT INTO public.vehicle_colors (
-    id, product_id, name, hex_code, image_url, is_two_tone, sort_order
-) VALUES (
-    'c0010000-0000-0000-0000-000000000003', 'a0000000-0000-0000-0000-000000000001', 'Silky Silver', '#B8B8B8', 'newxl7.png', FALSE, 3
-) ON CONFLICT (id) DO NOTHING;
-
-
+-- Removed from XL7 color choices per admin request.
+-- Removed from XL7 color choices per admin request.
 INSERT INTO public.vehicle_colors (
     id, product_id, name, hex_code, image_url, is_two_tone, sort_order
 ) VALUES (
     'c0010000-0000-0000-0000-000000000004', 'a0000000-0000-0000-0000-000000000001', 'Prime Black', '#1A1A1A', 'newxl7.png', FALSE, 4
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.vehicle_colors (
+    id, product_id, name, hex_code, image_url, is_two_tone, sort_order
+) VALUES (
+    'c0010000-0000-0000-0000-000000000005', 'a0000000-0000-0000-0000-000000000001', 'Blue', '#1E3A8A', 'newxl7.png', FALSE, 5
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.vehicle_colors (
+    id, product_id, name, hex_code, image_url, is_two_tone, sort_order
+) VALUES (
+    'c0010000-0000-0000-0000-000000000006', 'a0000000-0000-0000-0000-000000000001', 'Ivory', '#F2E8D5', 'newxl7.png', FALSE, 6
 ) ON CONFLICT (id) DO NOTHING;
 
 
@@ -269,7 +269,7 @@ INSERT INTO public.vehicle_colors (
 INSERT INTO public.vehicle_colors (
     id, product_id, name, hex_code, image_url, is_two_tone, sort_order
 ) VALUES (
-    'c0020000-0000-0000-0000-000000000005', 'a0000000-0000-0000-0000-000000000002', 'Metallic Blue', '#1E3A5F', 'SUZUKI_ERTIGA.png', FALSE, 5
+    'c0020000-0000-0000-0000-000000000005', 'a0000000-0000-0000-0000-000000000002', 'Brave Khaki', '#8A8062', 'SUZUKI_ERTIGA.png', FALSE, 5
 ) ON CONFLICT (id) DO NOTHING;
 
 

@@ -32,9 +32,11 @@ export default function Navbar() {
       </div>
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="group flex min-w-0 items-center gap-3" aria-label="Suzuki Diki Wahyudin beranda">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#123b78] text-lg font-extrabold tracking-tight text-white">S</span>
+          <span className="flex h-11 w-[148px] shrink-0 items-center sm:w-[166px]">
+            <img src="/suzuki-logo.svg" alt="Suzuki" className="h-auto w-full object-contain" />
+          </span>
           <span className="min-w-0 leading-tight">
-            <span className="mobile-brand-title block truncate text-sm font-extrabold tracking-[.025em] text-[#173b65] sm:text-base">SUZUKI <span className="text-blue-600">BANDUNG</span></span>
+            <span className="mobile-brand-title block truncate text-sm font-extrabold tracking-[.025em] text-[#173b65] sm:text-base">BANDUNG</span>
             <span className="mobile-brand-subtitle mt-1 block truncate text-[10px] font-medium tracking-wide text-slate-500">Diki Wahyudin · Sales Consultant</span>
           </span>
         </Link>

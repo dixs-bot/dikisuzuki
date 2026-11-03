@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   description:
     "Konsultasi pembelian mobil Suzuki di Bandung bersama Diki Wahyudin. Lihat katalog, tipe, harga referensi, promo yang tersedia, simulasi kredit, dan booking test drive.",
   applicationName: "Diki Wahyudin - Sales Suzuki Bandung",
+  icons: {
+    icon: [{ url: "/favicon.ico", sizes: "any" }, { url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.ico",
+    apple: "/icon.svg",
+  },
   keywords: [
     "sales Suzuki Bandung",
     "harga mobil Suzuki Bandung",

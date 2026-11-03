@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { productsData } from "@/data/products";
 import { siteUrl } from "@/lib/seo";
 import { siteConfig, getWhatsAppLink, formatRupiah } from "@/lib/constants";
@@ -8,7 +9,6 @@ import CreditSimulationWidget from "@/components/CreditSimulationWidget";
 import {
   Car,
   Calculator,
-  ShieldCheck,
   CheckCircle2,
   Clock,
   Sparkles,
@@ -63,13 +63,19 @@ export default function HomePage() {
           <div className="relative lg:col-span-5">
             <div className="absolute inset-5 rounded-[2rem] bg-[#168bff]/15 blur-2xl" />
             <div className="relative overflow-hidden rounded-[2rem] border border-white/90 bg-white/75 p-5 shadow-[0_24px_70px_rgba(18,59,120,.13)] backdrop-blur-xl sm:p-7">
-              <div className="mb-5 flex items-center justify-between gap-3"><div><span className="text-[10px] font-extrabold uppercase tracking-[.18em] text-[#168bff]">Mitra Konsultasi Suzuki</span><h2 className="mt-1 text-xl font-extrabold text-[#123b78]">{siteConfig.salesName}</h2><p className="text-xs text-slate-500">{siteConfig.salesRole}</p></div><div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#123b78] to-[#168bff] text-xl font-black text-white shadow-lg shadow-blue-500/20">DW</div></div>
+              <div className="mb-5 flex flex-col items-center text-center">
+                <div className="relative h-28 w-28 overflow-hidden rounded-full border-4 border-white shadow-[0_10px_30px_rgba(18,59,120,.20)] ring-2 ring-[#168bff]/25 sm:h-32 sm:w-32">
+                  <Image src="/diki-wahyudin.webp" alt="Foto profil Diki Wahyudin" fill priority sizes="(max-width: 640px) 112px, 128px" className="object-cover object-center" />
+                </div>
+                <h2 className="mt-3 text-xl font-extrabold tracking-wide text-[#123b78]">DIKI WAHYUDIN</h2>
+                <p className="mt-1 text-xs font-medium text-slate-500">{siteConfig.salesRole}</p>
+                <span className="mt-3 text-[10px] font-extrabold uppercase tracking-[.18em] text-[#168bff]">Mitra Konsultasi Suzuki</span>
+              </div>
               <div className="relative overflow-hidden rounded-2xl border border-[#dce8f5] bg-gradient-to-br from-[#f5f9ff] to-[#eaf4ff] p-5">
                 <div className="absolute -right-5 -top-5 h-28 w-28 rounded-full border-[18px] border-[#168bff]/10" />
-                <div className="relative"><span className="rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#1765c0] shadow-sm">Konsultasi Personal</span><p className="mt-4 text-sm leading-6 text-slate-600">Bantu pilih model, tipe, warna, dan skema pembelian yang sesuai kebutuhan Anda.</p><div className="mt-5 flex items-center gap-2 text-xs font-semibold text-[#1765c0]"><ShieldCheck className="h-4 w-4" /> Pendampingan informasi pembelian</div></div>
+                <div className="relative"><span className="rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#1765c0] shadow-sm">Konsultasi Personal</span><p className="mt-4 text-sm leading-6 text-slate-600">Bantu pilih model, tipe, warna, dan skema pembelian yang sesuai kebutuhan Anda.</p><div className="mt-5 flex items-center gap-2 text-xs font-semibold text-[#1765c0]"><span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#168bff]">✓</span> Pendampingan informasi pembelian</div></div>
               </div>
               <div className="mt-5 flex items-center justify-between gap-3 rounded-xl border border-[#e4eef9] bg-white p-3"><div><span className="block text-[10px] text-slate-500">Hubungi sales</span><strong className="text-sm text-[#123b78]">{siteConfig.phoneNumberFormatted}</strong></div><a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="btn-neon inline-flex items-center gap-2 rounded-lg px-3.5 py-2.5 text-xs font-bold"><MessageCircle className="h-4 w-4" /> WhatsApp</a></div>
-              <p className="mt-3 text-center text-[10px] text-slate-400">Informasi harga dan promo dapat berubah mengikuti ketentuan dealer.</p>
             </div>
           </div>
         </div>

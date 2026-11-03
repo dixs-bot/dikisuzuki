@@ -211,3 +211,25 @@ footer a:hover { color: #fff; }
   .section-kicker { font-size: .61rem; }
   .btn-neon { min-height: 44px; }
 }
+
+
+/* Smooth showroom-style slide when a customer changes the vehicle color. */
+.color-slide-frame {
+  will-change: transform, opacity;
+  animation-duration: 460ms;
+  animation-timing-function: cubic-bezier(.22, .75, .25, 1);
+  animation-fill-mode: both;
+}
+.color-slide-next { animation-name: vehicle-slide-from-right; }
+.color-slide-previous { animation-name: vehicle-slide-from-left; }
+@keyframes vehicle-slide-from-right {
+  from { opacity: 0; transform: translate3d(38px, 0, 0) scale(.985); filter: blur(2px); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+}
+@keyframes vehicle-slide-from-left {
+  from { opacity: 0; transform: translate3d(-38px, 0, 0) scale(.985); filter: blur(2px); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .color-slide-frame { animation: none !important; }
+}

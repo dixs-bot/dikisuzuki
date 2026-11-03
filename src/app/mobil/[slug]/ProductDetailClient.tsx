@@ -29,6 +29,7 @@ export default function ProductDetailPage({
   const product = productsData.find((p) => p.id === params.slug) || productsData[0];
 
   const [activeColorIndex, setActiveColorIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState<"next" | "previous">("next");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [dbColors, setDbColors] = useState<Array<{ id: string; name: string; hex_code: string; is_active?: boolean }>>([]);
@@ -127,9 +128,13 @@ export default function ProductDetailPage({
 
             <div className="w-full space-y-3 py-3">
               <div className="relative flex min-h-[220px] items-center justify-center overflow-hidden rounded-xl border border-[#dce8f5] bg-white p-2 sm:min-h-[360px] sm:rounded-2xl sm:p-4">
+                <div
+                  key={`${selectedColorId || "default"}-${displayImageUrl || activeColor.name}-${activePhotoIndex}`}
+                  className={`color-slide-frame color-slide-${slideDirection} flex min-h-[205px] w-full items-center justify-center sm:min-h-[328px]`}
+                  aria-live="polite"
+                >
                 {displayImageUrl ? (
                   <img
-                    key={`${selectedColorId || "default"}-${displayImageUrl}`}
                     src={displayImageUrl}
                     alt={activePhoto?.title || `${product.name} warna ${activeColor.name}`}
                     className="max-h-[360px] w-full object-contain object-center"
@@ -142,6 +147,7 @@ export default function ProductDetailPage({
                     <p className="mt-1 text-xs text-slate-500">Foto utama belum diatur. Admin dapat mengunggah PNG transparan untuk warna {activeColor.name}.</p>
                   </div>
                 )}
+                </div>
                 {displayImageUrl && <button type="button" onClick={() => setLightboxOpen(true)} className="absolute bottom-4 right-4 rounded-xl border border-[#dce8f5] bg-white/95 p-2.5 text-[#1765c0] shadow-md hover:text-[#168bff]" title="Perbesar foto"><Maximize2 className="h-4 w-4" /></button>}
                 {visiblePhotos.length > 1 && (
                   <>
@@ -165,7 +171,13 @@ export default function ProductDetailPage({
                 <button
                   key={i}
                   type="button"
-                  onClick={() => { setActiveColorIndex(i); setActivePhotoIndex(0); setColorWasManuallySelected(true); }}
+                  onClick={() => {
+                    if (i === activeColorIndex) return;
+                    setSlideDirection(i > activeColorIndex ? "next" : "previous");
+                    setActiveColorIndex(i);
+                    setActivePhotoIndex(0);
+                    setColorWasManuallySelected(true);
+                  }}
                   className={`flex items-center gap-2.5 px-3 py-2 rounded-xl border text-xs font-medium transition ${
                     activeColorIndex === i
                       ? "border-[#123B78] bg-blue-50/50 shadow-sm ring-1 ring-[#123B78]"

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { productsData } from "@/data/products";
 import { siteConfig, getWhatsAppLink } from "@/lib/constants";
+import { supabase } from "@/lib/supabase";
 import { Calendar, Clock, MapPin, User, Phone, CheckCircle2, MessageCircle } from "lucide-react";
 
 export default function TestDrivePage() {
@@ -13,9 +14,30 @@ export default function TestDrivePage() {
   const [locationType, setLocationType] = useState<"dealer" | "home_visit">("dealer");
   const [addressNotes, setAddressNotes] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
+    setSubmitError("");
+    const normalizedPhone = phoneNumber.trim().replace(/[\\s()-]/g, "");
+    const { error } = await supabase.from("test_drive_requests").insert({
+      full_name: fullName.trim(),
+      phone: normalizedPhone,
+      preferred_date: preferredDate,
+      preferred_time: "Waktu akan dikonfirmasi oleh sales",
+      product_name: selectedProduct,
+      location_type: locationType,
+      address_notes: locationType === "home_visit" ? addressNotes.trim() : null,
+      city: "Bandung",
+      status: "pending",
+    });
+    setSubmitting(false);
+    if (error) {
+      setSubmitError(`Permintaan belum tersimpan. ${error.message}`);
+      return;
+    }
     setSubmitted(true);
   };
 
@@ -61,6 +83,7 @@ export default function TestDrivePage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
+            {submitError && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{submitError}</div>}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-bold uppercase text-[#123B78] mb-1.5">
@@ -187,9 +210,10 @@ export default function TestDrivePage() {
 
             <button
               type="submit"
-              className="w-full bg-[#168BFF] hover:bg-red-700 text-white font-bold py-3.5 px-6 rounded-xl shadow transition text-sm"
+              disabled={submitting}
+              className="w-full bg-[#168BFF] hover:bg-[#0f6fd1] disabled:cursor-not-allowed disabled:opacity-60 text-white font-bold py-3.5 px-6 rounded-xl shadow transition text-sm"
             >
-              Konfirmasi &amp; Jadwalkan Test Drive
+              {submitting ? "Menyimpan Permintaan..." : "Konfirmasi &amp; Jadwalkan Test Drive"}
             </button>
           </form>
         )}

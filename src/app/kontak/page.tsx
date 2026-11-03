@@ -116,24 +116,25 @@ export default function KontakPage() {
             Terletak di jalan protokol Ahmad Yani No. 259, showroom kami mudah dijangkau dari seluruh penjuru Bandung, Cimahi, dan sekitarnya. Kami melayani kunjungan showroom, tes kendara, hingga tukar tambah kendaraan lama Anda.
           </p>
 
-          <div className="bg-gray-100 rounded-2xl h-80 flex items-center justify-center text-center p-6 border border-gray-200">
-            <div className="space-y-3 max-w-sm">
-              <div className="w-12 h-12 rounded-full bg-white shadow flex items-center justify-center mx-auto text-[#168BFF]">
-                <MapPin className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-sm text-[#123B78]">Showroom PT. Nusantara Jaya Sentosa</h3>
-              <p className="text-xs text-gray-500">
-                Jl. Jend. Ahmad Yani No. 259, Cihapit, Kec. Bandung Wetan, Kota Bandung, Jawa Barat 40114
-              </p>
-              <a
-                href={siteConfig.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-[#123B78] text-white text-xs font-semibold px-4 py-2 rounded-lg"
-              >
-                Navigasi Google Maps
-              </a>
-            </div>
+          <div className="relative h-80 overflow-hidden rounded-2xl border border-gray-200 bg-slate-100">
+            <iframe
+              title="Peta Showroom PT Nusantara Jaya Sentosa Ahmad Yani Bandung"
+              src="https://maps.google.com/maps?q=Jl.%20Jend.%20Ahmad%20Yani%20No.%20259%2C%20Cihapit%2C%20Bandung%20Wetan%2C%20Kota%20Bandung&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0, position: "absolute", inset: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+            <a
+              href={siteConfig.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute bottom-4 left-4 rounded-lg bg-[#123B78] px-4 py-2.5 text-xs font-bold text-white shadow-lg"
+            >
+              Navigasi Google Maps
+            </a>
           </div>
         </div>
       </div>

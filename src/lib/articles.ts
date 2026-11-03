@@ -21,29 +21,29 @@ export function getPublicSupabase() {
   return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
 }
 export function slugify(value: string) {
-  return value.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, "")
+  return value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 90);
 }
 
 export function parseArticleMarkdown(source: string): ArticlePackage {
-  const normalized = source.replace(/^\\uFEFF/, "").replace(/\\r\\n/g, "\\n");
-  const match = normalized.match(/^---\\s*\\n([\\s\\S]*?)\\n---\\s*\\n?([\\s\\S]*)$/);
-  if (!match) throw new Error("Format file tidak sesuai. Artikel harus diawali frontmatter YAML di antara tanda ---.");
+  const normalized = source.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n").trimStart();
+  const match = normalized.match(/^---[ \t]*\n([\s\S]*?)\n---[ \t]*(?:\n|$)([\s\S]*)$/);
+  if (!match) throw new Error("Format file tidak sesuai. Pastikan file dimulai dengan --- pada baris pertama dan metadata ditutup dengan ---.");
   const meta: Record<string, string | string[]> = {};
   let activeArray = "";
-  for (const rawLine of match[1].split("\\n")) {
+  for (const rawLine of match[1].split("\n")) {
     const line = rawLine.trim();
     if (!line || line.startsWith("#")) continue;
-    const arrayItem = line.match(/^[-]\\s*(.+)$/);
+    const arrayItem = line.match(/^-\s*(.+)$/);
     if (arrayItem && activeArray) {
       const current = Array.isArray(meta[activeArray]) ? meta[activeArray] as string[] : [];
       current.push(unquote(arrayItem[1])); meta[activeArray] = current; continue;
     }
-    const field = line.match(/^([a-zA-Z_]+):\\s*(.*)$/);
+    const field = line.match(/^([a-zA-Z_]+):\s*(.*)$/);
     if (!field) continue;
     activeArray = field[2] ? "" : field[1];
     if (field[2].startsWith("[")) {
-      meta[field[1]] = field[2].replace(/^\\[/, "").replace(/\\]$/, "").split(",").map((x) => unquote(x.trim())).filter(Boolean);
+      meta[field[1]] = field[2].replace(/^\[/, "").replace(/\]$/, "").split(",").map((x) => unquote(x.trim())).filter(Boolean);
     } else if (!field[2]) meta[field[1]] = [];
     else meta[field[1]] = unquote(field[2]);
   }

@@ -117,7 +117,7 @@ export default function AdminArticlesPage() {
 }
 
 function MarkdownPreview({content}:{content:string}) {
-  const lines=content.split("\\n"); const nodes:React.ReactNode[]=[]; let list:string[]=[];
+  const lines=content.split("\n"); const nodes:React.ReactNode[]=[]; let list:string[]=[];
   const flush=()=>{if(list.length){nodes.push(<ul key={`list-${nodes.length}`} className="my-3 list-disc space-y-1 pl-6">{list.map((x,i)=><li key={i}>{inline(x)}</li>)}</ul>);list=[];}};
   lines.forEach((raw,i)=>{const line=raw.trim();if(!line){flush();return;}if(line.startsWith("# ")){flush();nodes.push(<h2 key={i} className="my-4 text-xl font-bold text-[#123b78]">{inline(line.slice(2))}</h2>);}else if(line.startsWith("## ")){flush();nodes.push(<h3 key={i} className="my-3 text-lg font-bold text-[#123b78]">{inline(line.slice(3))}</h3>);}else if(line.startsWith("### ")){flush();nodes.push(<h4 key={i} className="my-2 font-bold text-[#123b78]">{inline(line.slice(4))}</h4>);}else if(/^[-*] /.test(line)){list.push(line.slice(2));}else{flush();nodes.push(<p key={i} className="my-2">{inline(line)}</p>);}});flush();return <>{nodes}</>;
 }

@@ -175,7 +175,7 @@ export default function HomePage() {
 
       {/* 5. PROMO SPECIAL BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-[#123b78] via-[#1765c0] to-[#168bff] rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+        <div className="promo-highlight bg-gradient-to-r from-[#123b78] via-[#1765c0] to-[#168bff] rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
           <div className="max-w-2xl space-y-4 relative z-10">
             <span className="inline-block bg-[#168BFF] text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
               Info Promo Terbaru
@@ -264,22 +264,34 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="lg:col-span-6 bg-gray-100 min-h-[350px] relative flex items-center justify-center p-8 text-center">
-            <div className="space-y-4 max-w-sm">
-              <div className="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center mx-auto text-[#168BFF]">
-                <MapPin className="w-8 h-8" />
+          <div className="showroom-map-panel lg:col-span-6 min-h-[350px] relative overflow-hidden bg-[#eef3f8]">
+            <iframe
+              title="Peta lokasi Showroom Suzuki NJS Ahmad Yani Bandung"
+              src="https://www.google.com/maps?q=Nusantara%20Jaya%20Sentosa%20Suzuki%20Ahmad%20Yani%20Bandung&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0, position: "absolute", inset: 0, minHeight: "350px" }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+            <div className="absolute bottom-4 left-4 right-4 z-10 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/70 bg-white/95 p-3 shadow-lg backdrop-blur-sm">
+              <div className="flex items-center gap-2 text-left">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eaf4ff] text-[#168BFF]">
+                  <MapPin className="h-5 w-5" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-sm font-bold text-[#123B78]">Peta Showroom Ahmad Yani Bandung</span>
+                  <span className="block text-xs text-[#52647a]">NJS Ahmad Yani · Bandung</span>
+                </span>
               </div>
-              <h3 className="font-bold text-lg text-[#123B78]">Peta Showroom Ahmad Yani Bandung</h3>
-              <p className="text-xs text-gray-500">
-                Akses strategis di pusat kota Bandung, dekat perempatan Jl. R.E Martadinata (Riau) &amp; Laswi.
-              </p>
               <a
                 href={siteConfig.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-white text-[#123B78] border border-gray-300 hover:bg-gray-50 text-xs font-bold px-4 py-2 rounded-lg shadow-sm"
+                className="inline-flex shrink-0 items-center rounded-lg bg-[#123B78] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#0B2854]"
               >
-                Petunjuk Arah Menuju Lokasi
+                Petunjuk Arah
               </a>
             </div>
           </div>

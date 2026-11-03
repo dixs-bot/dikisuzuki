@@ -42,7 +42,7 @@ export default function CreditSimulationWidget({
   }, [selectedProduct, selectedVariant, simResult]);
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+    <div className="credit-simulation bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
       <div className="flex items-center justify-between gap-3 bg-[#123B78] p-4 text-white sm:p-8">
         <div>
           <span className="inline-block bg-[#168BFF] text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2">

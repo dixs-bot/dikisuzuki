@@ -233,3 +233,47 @@ footer a:hover { color: #fff; }
 @media (prefers-reduced-motion: reduce) {
   .color-slide-frame { animation: none !important; }
 }
+
+
+/* V17: accessible contrast for dark promotional and finance panels. */
+.credit-simulation > div:first-child h3 {
+  color: #ffffff !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .12);
+}
+.credit-simulation > div:first-child p {
+  color: #e8f1ff !important;
+}
+.credit-simulation > div:first-child span {
+  color: #ffffff !important;
+}
+.credit-simulation .text-gray-500,
+.credit-simulation .text-gray-600 {
+  color: #52647a;
+}
+.credit-simulation .text-gray-300 {
+  color: #dce9f8;
+}
+.promo-highlight h3 {
+  color: #ffffff !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .12);
+}
+.promo-highlight p {
+  color: #f0f6ff !important;
+}
+.promo-highlight .text-gray-300 {
+  color: #e3efff !important;
+}
+.showroom-map-panel iframe {
+  display: block;
+  width: 100%;
+  min-height: 350px;
+}
+@media (max-width: 640px) {
+  .showroom-map-panel,
+  .showroom-map-panel iframe {
+    min-height: 390px;
+  }
+  .showroom-map-panel > div {
+    align-items: flex-start;
+  }
+}

@@ -31,7 +31,7 @@ export default function ProductDetailPage({
   const [activeColorIndex, setActiveColorIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
-  const [dbColors, setDbColors] = useState<Array<{ id: string; name: string; hex_code: string }>>([]);
+  const [dbColors, setDbColors] = useState<Array<{ id: string; name: string; hex_code: string; is_active?: boolean }>>([]);
   const [mainImageUrl, setMainImageUrl] = useState("");
   const [colorWasManuallySelected, setColorWasManuallySelected] = useState(false);
   const [dbPhotos, setDbPhotos] = useState<Array<{ id: string; title: string; image_url: string; color_id: string | null; category: string }>>([]);
@@ -44,11 +44,11 @@ export default function ProductDetailPage({
       if (!dbProduct || !alive) return;
       setMainImageUrl(dbProduct.main_image_url || "");
       const [{ data: colorRows }, { data: photoRows }] = await Promise.all([
-        supabase.from("vehicle_colors").select("id, name, hex_code").eq("product_id", dbProduct.id).order("sort_order"),
+        supabase.from("vehicle_colors").select("id, name, hex_code, is_active").eq("product_id", dbProduct.id).eq("is_active", true).order("sort_order"),
         supabase.from("vehicle_photos").select("id, title, image_url, color_id, category").eq("product_id", dbProduct.id).order("sort_order"),
       ]);
       if (alive) {
-        setDbColors((colorRows || []) as Array<{ id: string; name: string; hex_code: string }>);
+        setDbColors((colorRows || []) as Array<{ id: string; name: string; hex_code: string; is_active?: boolean }>);
         setDbPhotos((photoRows || []) as Array<{ id: string; title: string; image_url: string; color_id: string | null; category: string }>);
       }
     };

@@ -10,7 +10,7 @@ interface ProductCardProps {
   product: Product;
 }
 
-type DbColor = { id: string; name: string; hex_code: string };
+type DbColor = { id: string; name: string; hex_code: string; is_active?: boolean };
 type DbPhoto = { id: string; title: string; image_url: string; color_id: string | null; sort_order: number; is_featured: boolean };
 
 export default function ProductCard({ product }: ProductCardProps) {
@@ -36,8 +36,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       const [{ data: colorRows }, { data: photoRows }] = await Promise.all([
         supabase.from("vehicle_colors")
-          .select("id, name, hex_code")
+          .select("id, name, hex_code, is_active")
           .eq("product_id", dbProduct.id)
+          .eq("is_active", true)
           .order("sort_order", { ascending: true }),
         supabase.from("vehicle_photos")
           .select("id, title, image_url, color_id, sort_order, is_featured")

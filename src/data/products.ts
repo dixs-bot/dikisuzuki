@@ -78,22 +78,11 @@ export const productsData: Product[] = [
       }
     ],
     "colors": [
-      {
-        "name": "Pearl White",
-        "hex": "#F5F5F0"
-      },
-      {
-        "name": "Magma Red",
-        "hex": "#8B1A1A"
-      },
-      {
-        "name": "Silky Silver",
-        "hex": "#B8B8B8"
-      },
-      {
-        "name": "Prime Black",
-        "hex": "#1A1A1A"
-      }
+      { "name": "Ice Grayish Blue - Black", "hex": "#879BAA" },
+      { "name": "Savanna Ivory - Black", "hex": "#E7DDC8" },
+      { "name": "Marble Black", "hex": "#202124" },
+      { "name": "Pearl Snow White - Black", "hex": "#F4F3EF" },
+      { "name": "Metallic Magma Grey", "hex": "#777777" }
     ],
     "briefSpecs": [
       "Smart Hybrid",
@@ -167,26 +156,12 @@ export const productsData: Product[] = [
       }
     ],
     "colors": [
-      {
-        "name": "Pearl White",
-        "hex": "#F5F5F0"
-      },
-      {
-        "name": "Magma Red",
-        "hex": "#8B1A1A"
-      },
-      {
-        "name": "Silky Silver",
-        "hex": "#B8B8B8"
-      },
-      {
-        "name": "Prime Black",
-        "hex": "#1A1A1A"
-      },
-      {
-        "name": "Metallic Blue",
-        "hex": "#1E3A5F"
-      }
+      { "name": "Prime Cool Black", "hex": "#17191B" },
+      { "name": "Brave Khaki", "hex": "#8A8062" },
+      { "name": "Mellow Deep Red", "hex": "#8C2430" },
+      { "name": "Metallic Magma Gray", "hex": "#74777A" },
+      { "name": "Pearl Snow White", "hex": "#F5F4EF" },
+      { "name": "Silky Silver", "hex": "#B8B8B8" }
     ],
     "briefSpecs": [
       "Smart Hybrid",
@@ -243,18 +218,10 @@ export const productsData: Product[] = [
       }
     ],
     "colors": [
-      {
-        "name": "Super White",
-        "hex": "#F5F5F0"
-      },
-      {
-        "name": "Silky Silver",
-        "hex": "#B8B8B8"
-      },
-      {
-        "name": "Black",
-        "hex": "#1A1A1A"
-      }
+      { "name": "Real Black", "hex": "#171717" },
+      { "name": "Prime Graphite Grey", "hex": "#55595E" },
+      { "name": "White", "hex": "#F5F5F0" },
+      { "name": "Silky Silver", "hex": "#B8B8B8" }
     ],
     "briefSpecs": [
       "Daya Angkut 1 Ton",
@@ -395,30 +362,13 @@ export const productsData: Product[] = [
       }
     ],
     "colors": [
-      {
-        "name": "Kinetic Yellow",
-        "hex": "#E8D44D"
-      },
-      {
-        "name": "Jungle Green",
-        "hex": "#2E5A2E"
-      },
-      {
-        "name": "Pearl White",
-        "hex": "#F5F5F0"
-      },
-      {
-        "name": "Brisk Blue",
-        "hex": "#2255AA"
-      },
-      {
-        "name": "Sizzling Red",
-        "hex": "#C41E3A"
-      },
-      {
-        "name": "Black",
-        "hex": "#1A1A1A"
-      }
+      { "name": "Kinetic Yellow 2 - Pearl Bluish Black 4", "hex": "#D8B83D" },
+      { "name": "Metallic Brisk Blue - Pearl Bluish Black 3", "hex": "#315A87" },
+      { "name": "Metallic Chiffon Ivory 2 - Pearl Bluish Black 4", "hex": "#D8CFB8" },
+      { "name": "Pearl White", "hex": "#F4F3EE" },
+      { "name": "Silky Silver Metallic", "hex": "#B8B8B8" },
+      { "name": "Medium Grey", "hex": "#777A7D" },
+      { "name": "Bluish Black Pearl 3", "hex": "#20252B" }
     ],
     "briefSpecs": [
       "4WD Ladder Frame",
@@ -491,30 +441,12 @@ export const productsData: Product[] = [
       }
     ],
     "colors": [
-      {
-        "name": "Kinetic Yellow",
-        "hex": "#E8D44D"
-      },
-      {
-        "name": "Jungle Green",
-        "hex": "#2E5A2E"
-      },
-      {
-        "name": "Pearl White",
-        "hex": "#F5F5F0"
-      },
-      {
-        "name": "Brisk Blue",
-        "hex": "#2255AA"
-      },
-      {
-        "name": "Sizzling Red",
-        "hex": "#C41E3A"
-      },
-      {
-        "name": "Black",
-        "hex": "#1A1A1A"
-      }
+      { "name": "Jungle Green 2", "hex": "#31553B" },
+      { "name": "Kinetic Yellow 2 - Pearl Bluish Black 4", "hex": "#D8B83D" },
+      { "name": "Metallic Chiffon Ivory 2 - Pearl Bluish Black 4", "hex": "#D8CFB8" },
+      { "name": "Metallic Sizzling Red - Pearl Bluish Black 4", "hex": "#8F2630" },
+      { "name": "Bluish Black 4", "hex": "#20252B" },
+      { "name": "Granite Gray Metallic", "hex": "#707478" }
     ],
     "briefSpecs": [
       "4WD Ladder Frame",
@@ -567,26 +499,10 @@ export const productsData: Product[] = [
       }
     ],
     "colors": [
-      {
-        "name": "Pearl White",
-        "hex": "#F5F5F0"
-      },
-      {
-        "name": "Sapphire Blue",
-        "hex": "#1E3A5F"
-      },
-      {
-        "name": "Magma Red",
-        "hex": "#8B1A1A"
-      },
-      {
-        "name": "Premium Silver",
-        "hex": "#B8B8B8"
-      },
-      {
-        "name": "Black",
-        "hex": "#1A1A1A"
-      }
+      { "name": "Pearl Cave Black", "hex": "#17191B" },
+      { "name": "Pearl Midnight Black", "hex": "#24272B" },
+      { "name": "Pearl Arctic White - Black", "hex": "#F4F3EF" },
+      { "name": "Prime Splendid Silver - Black", "hex": "#B7B9BC" }
     ],
     "briefSpecs": [
       "ALLGRIP AWD",
@@ -643,26 +559,11 @@ export const productsData: Product[] = [
       }
     ],
     "colors": [
-      {
-        "name": "Sapphire Blue",
-        "hex": "#1E3A5F"
-      },
-      {
-        "name": "Silky Silver",
-        "hex": "#B8B8B8"
-      },
-      {
-        "name": "Pearl White",
-        "hex": "#F5F5F0"
-      },
-      {
-        "name": "Fire Red",
-        "hex": "#C41E3A"
-      },
-      {
-        "name": "Black",
-        "hex": "#1A1A1A"
-      }
+      { "name": "Granite Gray Metallic", "hex": "#74787C" },
+      { "name": "White", "hex": "#F5F5F0" },
+      { "name": "Silky Silver Metallic", "hex": "#B8B8B8" },
+      { "name": "Solid Fire Red", "hex": "#B51F2B" },
+      { "name": "Sizzle Orange", "hex": "#E56C24" }
     ],
     "briefSpecs": [
       "Ground Clearance 180mm",
@@ -759,26 +660,14 @@ export const productsData: Product[] = [
       }
     ],
     "colors": [
-      {
-        "name": "Pearl White",
-        "hex": "#F5F5F0"
-      },
-      {
-        "name": "Sapphire Blue",
-        "hex": "#1E3A5F"
-      },
-      {
-        "name": "Magma Red",
-        "hex": "#8B1A1A"
-      },
-      {
-        "name": "Silky Silver",
-        "hex": "#B8B8B8"
-      },
-      {
-        "name": "Black",
-        "hex": "#1A1A1A"
-      }
+      { "name": "Cool Black with Black Grille", "hex": "#17191B" },
+      { "name": "Ice Grayish Blue - Black", "hex": "#879BAA" },
+      { "name": "Pearl Snow White - Black", "hex": "#F4F3EF" },
+      { "name": "Savanna Ivory - Black", "hex": "#E7DDC8" },
+      { "name": "Cool Black", "hex": "#17191B" },
+      { "name": "Pearl Snow White", "hex": "#F5F4EF" },
+      { "name": "Savanna Ivory", "hex": "#E7DDC8" },
+      { "name": "Metallic Magma Gray", "hex": "#777A7D" }
     ],
     "briefSpecs": [
       "Turbo Engine",
@@ -836,22 +725,10 @@ export const productsData: Product[] = [
       }
     ],
     "colors": [
-      {
-        "name": "Silky Silver",
-        "hex": "#B8B8B8"
-      },
-      {
-        "name": "Super White",
-        "hex": "#F5F5F0"
-      },
-      {
-        "name": "Black",
-        "hex": "#1A1A1A"
-      },
-      {
-        "name": "Blue",
-        "hex": "#1E3A5F"
-      }
+      { "name": "Cool Black Metallic", "hex": "#17191B" },
+      { "name": "Burgundy Red", "hex": "#70212A" },
+      { "name": "Graphite Grey Metallic", "hex": "#64686C" },
+      { "name": "Silky Silver Metallic", "hex": "#B8B8B8" }
     ],
     "briefSpecs": [
       "Kabin Luas",
@@ -895,14 +772,8 @@ export const productsData: Product[] = [
       }
     ],
     "colors": [
-      {
-        "name": "Super White",
-        "hex": "#F5F5F0"
-      },
-      {
-        "name": "Silky Silver",
-        "hex": "#B8B8B8"
-      }
+      { "name": "Super White", "hex": "#F5F5F0" },
+      { "name": "Silky Silver", "hex": "#B8B8B8" }
     ],
     "briefSpecs": [
       "Kabin Tertutup",

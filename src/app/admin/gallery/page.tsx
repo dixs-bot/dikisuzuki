@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { ArrowLeft, UploadCloud, Trash2, Image as ImageIcon, Loader2, AlertCircle, CheckCircle2, Star, RefreshCw } from "lucide-react";
 
 type ProductRow = { id: string; slug: string; name: string };
-type ColorRow = { id: string; product_id: string; name: string; hex_code: string };
+type ColorRow = { id: string; product_id: string; name: string; hex_code: string; is_active?: boolean };
 type PhotoRow = { id: string; product_id: string | null; title: string; caption: string | null; category: string; image_url: string; storage_path: string | null; sort_order: number; is_featured: boolean; color_id?: string | null };
 const BUCKET = "vehicle-gallery";
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -28,7 +28,7 @@ export default function AdminGalleryPage() {
   const [busyId, setBusyId] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  const availableColors = useMemo(() => colors.filter((color) => color.product_id === productId), [colors, productId]);
+  const availableColors = useMemo(() => colors.filter((color) => color.product_id === productId && color.is_active !== false), [colors, productId]);
   const visiblePhotos = useMemo(
     () => photoProductFilter === "all" ? photos : photos.filter((photo) => photo.product_id === photoProductFilter),
     [photos, photoProductFilter],
@@ -42,7 +42,7 @@ export default function AdminGalleryPage() {
     setLoading(true);
     const [{ data: productRows, error: productError }, { data: colorRows, error: colorError }, { data: photoRows, error: photoError }] = await Promise.all([
       supabase.from("products").select("id, slug, name").eq("is_active", true).order("sort_order"),
-      supabase.from("vehicle_colors").select("id, product_id, name, hex_code").order("sort_order"),
+      supabase.from("vehicle_colors").select("id, product_id, name, hex_code, is_active").order("sort_order"),
       supabase.from("vehicle_photos").select("id, product_id, title, caption, category, image_url, storage_path, sort_order, is_featured, color_id").order("sort_order", { ascending: true }),
     ]);
     if (productError || colorError || photoError) {

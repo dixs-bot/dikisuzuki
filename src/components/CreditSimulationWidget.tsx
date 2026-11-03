@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { Product, formatRupiah, calculateCreditSimulation, getWhatsAppLink, flatInterestRates } from "@/lib/constants";
 import { Calculator, MessageCircle, Info, CheckCircle2 } from "lucide-react";
+import FinancePartners from "@/components/FinancePartners";
 
 interface CreditSimulationProps {
   products: Product[];
@@ -157,6 +158,7 @@ export default function CreditSimulationWidget({
               ))}
             </div>
           </div>
+          <FinancePartners />
         </div>
 
         {/* Calculation Result Box */}
